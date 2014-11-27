@@ -1,0 +1,31 @@
+package util;
+
+import data.VClass;
+import data.VTrainSet;
+import data.VTrainSet.Row;
+
+public abstract interface VMethod extends VBase
+{
+  public abstract int Calculate();
+
+  public abstract int Accept(VTrainSet paramVTrainSet, VClass paramVClass)
+    throws Exception;
+
+  public abstract int Append(VTrainSet paramVTrainSet, VClass paramVClass)
+    throws Exception;
+
+  public abstract int PreCalculate();
+
+  public abstract int PostCalculate();
+
+  public abstract Object Predict(VTrainSet.Row paramRow);
+
+  public abstract int UnSerialize();
+
+  public abstract int Serialize();
+}
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     util.VMethod
+ * JD-Core Version:    0.6.0
+ */
