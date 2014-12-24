@@ -1,4 +1,4 @@
-package V.syntax.type;
+package V.syntaxLL.type;
 /**
  * 声明表达式
  * @author Administrator

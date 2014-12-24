@@ -1,4 +1,4 @@
-package V.syntax.type;
+package V.syntaxLL.type;
 /**
  * ±Ì¥Ô Ω£∫sequence: <BaseType>
  * 					or
@@ -7,6 +7,8 @@ package V.syntax.type;
  * 					 <NormalExpression>
  * 					or
  * 					 <BooleanExpression>
+ * 					or
+ * 					 <Assignment>
  * @author Administrator
  *
  */

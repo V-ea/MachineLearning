@@ -1,4 +1,4 @@
-package V.syntax.type;
+package V.syntaxLL.type;
 /**
  * 布尔值表达式 sequence : Identifier BooleanOper <Expression>
  * 							or

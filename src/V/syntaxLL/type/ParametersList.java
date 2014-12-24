@@ -1,4 +1,4 @@
-package V.syntax.type;
+package V.syntaxLL.type;
 /**
  * 参数列表  sequence: Parameter,<ParameterssList>
  * 					or 

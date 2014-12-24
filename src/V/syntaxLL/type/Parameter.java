@@ -1,4 +1,4 @@
-package V.syntax.type;
+package V.syntaxLL.type;
 /**
  * ²ÎÊı  sequence: 
  * 				 <Expression>
