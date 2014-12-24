@@ -1,0 +1,18 @@
+/*    */ package exception;
+/*    */ 
+/*    */ import java.io.PrintStream;
+/*    */ 
+/*    */ public class VNotSameSizeException extends Exception
+/*    */ {
+/*    */   private static final long serialVersionUID = 1800418108517304071L;
+/*    */ 
+/*    */   public VNotSameSizeException(String string)
+/*    */   {
+/* 10 */     System.out.println("NotSameSizeException:" + string);
+/*    */   }
+/*    */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     exception.VNotSameSizeException
+ * JD-Core Version:    0.6.0
+ */

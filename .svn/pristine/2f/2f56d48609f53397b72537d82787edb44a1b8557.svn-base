@@ -1,0 +1,94 @@
+/*    */ package impl;
+/*    */ 
+/*    */ import data.VClass;
+/*    */ import data.VTrainSet;
+/*    */ import data.VTrainSet.Row;
+/*    */ import exception.VNotSameSizeException;
+/*    */ import java.util.Arrays;
+/*    */ import util.VMethod;
+/*    */ 
+/*    */ public abstract class VFeatureSameSizeMethod
+/*    */   implements VMethod
+/*    */ {
+/* 19 */   protected VTrainSet data = null;
+/* 20 */   protected VClass class1 = null;
+/* 21 */   private int columnSize = -1;
+/* 22 */   private int rowSize = 0;
+/*    */ 
+/*    */   public int getColumnSize() {
+/* 25 */     return this.columnSize;
+/*    */   }
+/*    */ 
+/*    */   public int getRowSize() {
+/* 29 */     return this.rowSize;
+/*    */   }
+/*    */ 
+/*    */   public int Accept(VTrainSet trainSet, VClass class1)
+/*    */     throws Exception
+/*    */   {
+/* 36 */     this.data = trainSet;
+/* 37 */     this.class1 = class1;
+/* 38 */     int cs = -1;
+/* 39 */     for (int i1 = 0; i1 < trainSet.getValue().length; i1++) {
+/* 40 */       if (i1 == 0) {
+/* 41 */         cs = trainSet.getValue()[i1].getArray().length;
+/*    */       } else {
+/* 43 */         int cs2 = trainSet.getValue()[i1]
+/* 44 */           .getArray().length;
+/* 45 */         if (cs2 != cs) {
+/* 46 */           throw new VNotSameSizeException(
+/* 47 */             "The Rows are not in the Same size.");
+/*    */         }
+/*    */       }
+/*    */     }
+/* 51 */     int trainSetLen = trainSet.getValue().length;
+/* 52 */     int classLen = class1.valueObjects.length;
+/* 53 */     if (classLen != trainSetLen)
+/* 54 */       throw new VNotSameSizeException(
+/* 55 */         "TrainSet and Class are not int the Same size.");
+/* 56 */     this.columnSize = cs;
+/* 57 */     this.rowSize = trainSetLen;
+/*    */ 
+/* 59 */     return 0;
+/*    */   }
+/*    */ 
+/*    */   public int Append(VTrainSet trainSet, VClass class1)
+/*    */     throws Exception
+/*    */   {
+/* 65 */     int cs = -1;
+/* 66 */     for (int i1 = 0; i1 < trainSet.getValue().length; i1++) {
+/* 67 */       if (i1 == 0) {
+/* 68 */         cs = trainSet.getValue()[i1].getArray().length;
+/*    */       } else {
+/* 70 */         int cs2 = trainSet.getValue()[i1].getArray().length;
+/* 71 */         if ((cs2 != cs) || (this.columnSize != cs)) {
+/* 72 */           throw new VNotSameSizeException(
+/* 73 */             "The Rows are not in the Same size.");
+/*    */         }
+/*    */       }
+/*    */     }
+/* 77 */     int trainSetLen = trainSet.getValue().length;
+/* 78 */     int classLen = class1.valueObjects.length;
+/* 79 */     if (classLen != trainSetLen)
+/* 80 */       throw new VNotSameSizeException(
+/* 81 */         "TrainSet and Class are not int the Same size.");
+/* 82 */     this.rowSize += trainSetLen;
+/* 83 */     VTrainSet.Row[] rows = this.data.getValue();
+/* 84 */     VTrainSet.Row[] newRows = (VTrainSet.Row[])Arrays.copyOf(rows, this.rowSize);
+/* 85 */     System.arraycopy(trainSet.getValue(), 0, newRows, rows.length, 
+/* 86 */       trainSetLen);
+/*    */ 
+/* 88 */     this.data.setValue(newRows);
+/* 89 */     Object[] classes = this.class1.valueObjects;
+/* 90 */     Object[] newClasses = Arrays.copyOf(classes, this.rowSize);
+/* 91 */     System.arraycopy(class1.valueObjects, 0, newClasses, classes.length, 
+/* 92 */       trainSetLen);
+/* 93 */     this.class1.valueObjects = newClasses;
+/* 94 */     return 0;
+/*    */   }
+/*    */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     impl.VFeatureSameSizeMethod
+ * JD-Core Version:    0.6.0
+ */

@@ -1,0 +1,47 @@
+/*    */ package test;
+/*    */ 
+/*    */ import java.io.PrintStream;
+/*    */ import java.util.Arrays;
+/*    */ import java.util.regex.Matcher;
+/*    */ import java.util.regex.Pattern;
+/*    */ 
+/*    */ public class PatternDemo1
+/*    */ {
+/*    */   public static void main(String[] args)
+/*    */   {
+/* 53 */     method2(new String[] { "1", "12345", "12" }, "[0-9]");
+/* 54 */     method1();
+/*    */   }
+/*    */ 
+/*    */   private static void method2(String[] a, String regex) {
+/* 58 */     Pattern p = Pattern.compile(regex);
+/* 59 */     for (int i = 0; i < a.length; i++)
+/* 60 */       System.out.println(a[i] + "," + p.matcher(a[i]).matches());
+/*    */   }
+/*    */ 
+/*    */   private static void method1() {
+/* 64 */     String str = "2011-11-12";
+/* 65 */     String pat = "\\d{4}-\\d{2}-\\d{2}";
+/* 66 */     System.out.println(Pattern.compile(pat).matcher(str).matches());
+/*    */ 
+/* 68 */     String str1 = "a1b22c333d4444e55555f";
+/*    */ 
+/* 70 */     String[] str1Arr = Pattern.compile("\\d+").split(str1);
+/* 71 */     System.out.println(Arrays.toString(str1Arr));
+/*    */ 
+/* 73 */     System.out.println(Pattern.compile("\\d+").matcher(str1).replaceAll("_"));
+/*    */ 
+/* 75 */     System.out.println("\\s去除所有的空格:" + Pattern.compile("\\s").matcher("aa b c d ").replaceAll(""));
+/* 76 */     System.out.println("5-10个字符:" + Pattern.compile(".{5,10}").matcher("12345").matches());
+/* 77 */     System.out.println("多匹配:" + Pattern.compile("\\bhi.*Lucy\\b").matcher("hi后面不远处跟着一个Lucy").matches());
+/* 78 */     System.out.println("多匹配2:" + Pattern.compile("^\\d{5,12}$").matcher("12345678a").matches());
+/*    */ 
+/* 81 */     System.out.println(Arrays.toString(str1.split("\\d+")));
+/* 82 */     System.out.println("2011-11-12".matches("\\d{4}-\\d{2}-\\d{2}"));
+/*    */   }
+/*    */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     test.PatternDemo1
+ * JD-Core Version:    0.6.0
+ */

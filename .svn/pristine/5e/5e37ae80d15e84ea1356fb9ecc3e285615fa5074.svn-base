@@ -1,0 +1,442 @@
+/*     */ package math;
+/*     */ 
+/*     */ import java.io.PrintStream;
+/*     */ import java.util.Stack;
+/*     */ import java.util.regex.Matcher;
+/*     */ import java.util.regex.Pattern;
+/*     */ 
+/*     */ public class VEasyFunctor
+/*     */ {
+/*  11 */   private String Equation = null;
+/*  12 */   private VFunctor functor = new VFunctor();
+/*     */ 
+/*  16 */   public int[] charType = new int[''];
+/*  17 */   private int rindex = 0;
+/*  18 */   private static int OPER = 1; private static int IDEN = 2; private static int NUMBER = 3; private static int LEFT = 4;
+/*  19 */   private String[] ungiven = null;
+/*  20 */   private int BrokenSignal = 0;
+/*     */ 
+/*     */   public VFunctor getFunctor()
+/*     */   {
+/*  14 */     return this.functor;
+/*     */   }
+/*     */ 
+/*     */   private void init()
+/*     */   {
+/*  22 */     for (int k = 0; k < 128; k++)
+/*  23 */       this.charType[k] = -1;
+/*  24 */     for (char i = 'a'; i <= 'z'; i = (char)(i + '\001')) {
+/*  25 */       this.charType[i] = 0;
+/*     */     }
+/*  27 */     for (char i = 'A'; i <= 'Z'; i = (char)(i + '\001')) {
+/*  28 */       this.charType[i] = 0;
+/*     */     }
+/*  30 */     this.charType[48] = 101;
+/*  31 */     for (char i = '1'; i <= '9'; i = (char)(i + '\001')) {
+/*  32 */       this.charType[i] = 102;
+/*     */     }
+/*  34 */     this.charType[46] = 103;
+/*  35 */     this.charType[43] = 1;
+/*  36 */     this.charType[45] = 1;
+/*  37 */     this.charType[42] = 2;
+/*  38 */     this.charType[47] = 2;
+/*  39 */     this.charType[94] = 3;
+/*  40 */     this.charType[40] = 201;
+/*  41 */     this.charType[95] = 0;
+/*     */   }
+/*     */ 
+/*     */   public VEasyFunctor()
+/*     */   {
+/*  46 */     init();
+/*     */   }
+/*     */ 
+/*     */   public VEasyFunctor SetEquation(String str)
+/*     */   {
+/*  53 */     this.functor.SetEquation(changeFrom(str));
+/*  54 */     this.ungiven = getUnGiven();
+/*  55 */     this.Equation = str;
+/*  56 */     return this;
+/*     */   }
+/*     */ 
+/*     */   public void Given(String x, Float v) {
+/*  60 */     this.functor.Given(x, v);
+/*     */   }
+/*     */ 
+/*     */   public Float Find() {
+/*  64 */     return this.functor.Find();
+/*     */   }
+/*     */ 
+/*     */   public VEasyFunctor Partial(String x) {
+/*  68 */     return new VEasyFunctor(this.functor.Partial(x));
+/*     */   }
+/*     */ 
+/*     */   public VEasyFunctor(VFunctor functor)
+/*     */   {
+/*  73 */     this.functor = functor;
+/*  74 */     this.ungiven = getUnGiven();
+/*  75 */     init();
+/*     */   }
+/*     */ 
+/*     */   public String GetEquation() {
+/*  79 */     return this.functor.GetEquation();
+/*     */   }
+/*     */   public String[] getRegex(String regx, String u, int i) {
+/*  82 */     Pattern p = Pattern.compile(regx);
+/*  83 */     Matcher m = p.matcher(u);
+/*  84 */     int c = 0;
+/*  85 */     while (m.find())
+/*     */     {
+/*  88 */       c++;
+/*     */     }
+/*  90 */     String[] ret = new String[c];
+/*  91 */     m = p.matcher(u);
+/*  92 */     c = 0;
+/*  93 */     while (m.find())
+/*     */     {
+/*  95 */       ret[c] = m.group(i);
+/*  96 */       c++;
+/*     */     }
+/*  98 */     return ret;
+/*     */   }
+/*     */ 
+/*     */   public String[] GetUnGiven()
+/*     */   {
+/* 103 */     return this.ungiven;
+/*     */   }
+/*     */ 
+/*     */   private String[] getUnGiven() {
+/* 107 */     String string = this.functor.GetEquation();
+/* 108 */     String[] strs0 = getRegex("^([a-zA-Z][a-zA-Z0-9_]*)$", string, 0);
+/*     */ 
+/* 110 */     if ((strs0 != null) && (strs0.length != 0))
+/*     */     {
+/* 112 */       int cc = 0;
+/* 113 */       for (int h = 0; h < strs0.length; h++)
+/*     */       {
+/* 115 */         if (!this.functor.IsConst(strs0[h]))
+/* 116 */           cc++;
+/*     */       }
+/* 118 */       String[] ret = new String[cc];
+/* 119 */       int index = 0;
+/* 120 */       for (int h = 0; h < strs0.length; h++)
+/*     */       {
+/* 122 */         if (!this.functor.IsConst(strs0[h]))
+/* 123 */           ret[(index++)] = strs0[h];
+/*     */       }
+/* 125 */       return ret;
+/*     */     }
+/* 127 */     String[] strs1 = getRegex("\\(([a-zA-Z][a-zA-Z0-9_]*),", string, 1);
+/* 128 */     String[] strs2 = getRegex(",([a-zA-Z][a-zA-Z0-9_]*)\\)", string, 1);
+/* 129 */     String[] strs3 = getRegex("\\(([a-zA-Z][a-zA-Z0-9_]*)\\)", string, 1);
+/* 130 */     String[] strs4 = getRegex(",([a-zA-Z][a-zA-Z0-9_]*),", string, 1);
+/* 131 */     int cc = 0;
+/* 132 */     for (int i = 0; i < strs1.length; i++)
+/*     */     {
+/* 135 */       if (!this.functor.IsConst(strs1[i]))
+/* 136 */         cc++;
+/*     */     }
+/* 138 */     for (int k = 0; k < strs2.length; k++)
+/*     */     {
+/* 140 */       if (!this.functor.IsConst(strs2[k]))
+/* 141 */         cc++;
+/*     */     }
+/* 143 */     for (int i = 0; i < strs3.length; i++)
+/*     */     {
+/* 145 */       if (!this.functor.IsConst(strs3[i]))
+/* 146 */         cc++;
+/*     */     }
+/* 148 */     for (int k = 0; k < strs4.length; k++)
+/*     */     {
+/* 150 */       if (!this.functor.IsConst(strs4[k]))
+/* 151 */         cc++;
+/*     */     }
+/* 153 */     String[] strs_ = new String[cc];
+/* 154 */     int index = 0;
+/* 155 */     for (int i = 0; i < strs1.length; i++)
+/*     */     {
+/* 157 */       if (this.functor.IsConst(strs1[i])) continue; strs_[(index++)] = strs1[i];
+/*     */     }
+/* 159 */     for (int k = 0; k < strs2.length; k++)
+/*     */     {
+/* 161 */       if (!this.functor.IsConst(strs2[k]))
+/* 162 */         strs_[(index++)] = strs2[k];
+/*     */     }
+/* 164 */     for (int i = 0; i < strs3.length; i++)
+/*     */     {
+/* 166 */       if (this.functor.IsConst(strs3[i])) continue; strs_[(index++)] = strs3[i];
+/*     */     }
+/* 168 */     for (int k = 0; k < strs4.length; k++)
+/*     */     {
+/* 170 */       if (!this.functor.IsConst(strs4[k]))
+/* 171 */         strs_[(index++)] = strs4[k];
+/*     */     }
+/* 173 */     return strs_;
+/*     */   }
+/*     */ 
+/*     */   private String changeFrom(String str)
+/*     */   {
+/* 179 */     Stack stackId = new Stack();
+/* 180 */     Stack stackOper = new Stack();
+/* 181 */     int length = str.length();
+/* 182 */     String resultString = "";
+/* 183 */     int LastStringType = 0;
+/* 184 */     for (int i = 0; i < length; ) {
+/* 185 */       if (this.BrokenSignal == 1)
+/*     */       {
+/* 187 */         return null;
+/*     */       }
+/* 189 */       char ch = str.charAt(i);
+/* 190 */       if ((ch >= 0) && (ch <= ''));
+/* 191 */       switch (this.charType[ch])
+/*     */       {
+/*     */       case 1:
+/*     */       case 2:
+/*     */       case 3:
+/* 196 */         i = accept_single_operator(str, i, resultString, stackId, stackOper);
+/* 197 */         LastStringType = OPER;
+/*     */ 
+/* 199 */         break;
+/*     */       case 0:
+/* 202 */         i = accept_identifier(str, i, stackId, stackOper);
+/* 203 */         LastStringType = IDEN;
+/*     */ 
+/* 205 */         break;
+/*     */       case 101:
+/*     */       case 102:
+/* 208 */         i = accept_number(str, i, stackId, stackOper);
+/* 209 */         LastStringType = NUMBER;
+/*     */ 
+/* 211 */         break;
+/*     */       case 201:
+/* 213 */         if (LastStringType != IDEN)
+/*     */         {
+/* 215 */           i = accept_xiaokuohao(str, i, stackId, stackOper);
+/*     */         }
+/*     */         else
+/*     */         {
+/* 220 */           i = accept_function(str, i, stackId, stackOper);
+/*     */         }
+/* 222 */         LastStringType = LEFT;
+/* 223 */         break;
+/*     */       default:
+/*     */         try
+/*     */         {
+/* 227 */           throw new Exception("unaccepted char." + ch);
+/*     */         }
+/*     */         catch (Exception e) {
+/* 230 */           e.printStackTrace();
+/* 231 */           this.BrokenSignal = 1;
+/*     */         }
+/*     */ 
+/*     */         try
+/*     */         {
+/* 238 */           throw new Exception("unrecognized char.");
+/*     */         }
+/*     */         catch (Exception e) {
+/* 241 */           e.printStackTrace();
+/* 242 */           this.BrokenSignal = 1;
+/*     */         }
+/*     */       }
+/*     */     }
+/* 246 */     while (!stackOper.empty()) {
+/* 247 */       String s2 = (String)stackId.pop();
+/* 248 */       String s1 = (String)stackId.pop();
+/* 249 */       String oper = (String)stackOper.pop();
+/* 250 */       s1 = ":" + oper + "(" + s1 + "," + s2 + ")";
+/*     */ 
+/* 252 */       stackId.push(s1);
+/*     */     }
+/* 254 */     return (String)stackId.pop();
+/*     */   }
+/*     */ 
+/*     */   private int accept_function(String string, int index, Stack<String> stackId, Stack<String> stackOper)
+/*     */   {
+/* 260 */     String string2 = "";
+/* 261 */     int from = index + 1;
+/* 262 */     int kuohaocount = 0;
+/*     */     while (true) {
+/* 264 */       if (string.charAt(from) == '(') {
+/* 265 */         kuohaocount++;
+/*     */       }
+/* 267 */       if (string.charAt(from) == ')') {
+/* 268 */         kuohaocount--;
+/* 269 */         if (kuohaocount == -1) {
+/* 270 */           from++;
+/* 271 */           break;
+/*     */         }
+/*     */       }
+/*     */ 
+/* 275 */       string2 = string2 + string.charAt(from);
+/* 276 */       from++;
+/*     */     }
+/* 278 */     string2 = changeFrom(string2);
+/*     */ 
+/* 281 */     String string3 = (String)stackId.pop();
+/* 282 */     stackId.push(":" + string3 + "(" + string2 + ")");
+/* 283 */     return from;
+/*     */   }
+/*     */ 
+/*     */   private int accept_number(String string, int index, Stack<String> stackId, Stack<String> stackOper) {
+/* 287 */     int length = string.length();
+/* 288 */     int from = index;
+/* 289 */     int exists = 0;
+/* 290 */     String string2 = "";
+/* 291 */     string2 = string2 + string.charAt(index);
+/* 292 */     from++;
+/* 293 */     while ((from < length) && (
+/* 294 */       (this.charType[string.charAt(from)] == 101) || 
+/* 295 */       (this.charType[string.charAt(from)] == 102) || (
+/* 296 */       (this.charType[string
+/* 296 */       .charAt(from)] == 103) && (exists != 1)))) {
+/* 297 */       if (this.charType[string.charAt(from)] == 103) {
+/* 298 */         exists = 1;
+/*     */       }
+/* 300 */       string2 = string2 + string.charAt(from);
+/* 301 */       from++;
+/*     */     }
+/*     */ 
+/* 304 */     stackId.push(string2);
+/* 305 */     return from;
+/*     */   }
+/*     */ 
+/*     */   private int accept_identifier(String string, int index, Stack<String> stackId, Stack<String> stackOper) {
+/* 309 */     int length = string.length();
+/* 310 */     int from = index;
+/* 311 */     String string2 = "";
+/* 312 */     string2 = string2 + string.charAt(index);
+/* 313 */     from++;
+/* 314 */     while ((from < length) && (
+/* 315 */       (this.charType[string.charAt(from)] == 0) || 
+/* 316 */       (this.charType[string.charAt(from)] == 101) || 
+/* 317 */       (this.charType[string
+/* 317 */       .charAt(from)] == 102))) {
+/* 318 */       string2 = string2 + string.charAt(from);
+/* 319 */       from++;
+/*     */     }
+/*     */ 
+/* 322 */     stackId.push(string2);
+/* 323 */     return from;
+/*     */   }
+/*     */ 
+/*     */   private int accept_single_operator(String string, int index, String resultString, Stack<String> stackId, Stack<String> stackOper)
+/*     */   {
+/* 328 */     String string2 = "";
+/* 329 */     char ch = string.charAt(index);
+/*     */ 
+/* 331 */     int chtype = this.charType[ch];
+/* 332 */     if (stackOper.empty()) {
+/* 333 */       string2 = string2 + ch;
+/* 334 */       stackOper.push(string2);
+/* 335 */       return index + 1;
+/*     */     }
+/* 337 */     int chtop = this.charType[((String)stackOper.peek()).charAt(0)];
+/* 338 */     if (chtop < chtype) {
+/* 339 */       string2 = string2 + string.charAt(index);
+/* 340 */       stackOper.push(string2);
+/*     */     } else {
+/* 342 */       String str = "";
+/* 343 */       while (chtop >= chtype) {
+/* 344 */         if (stackId.size() < 2) {
+/*     */           try {
+/* 346 */             throw new Exception("unaccepted stack.");
+/*     */           }
+/*     */           catch (Exception e) {
+/* 349 */             e.printStackTrace();
+/*     */           }
+/*     */         }
+/* 352 */         String s2 = (String)stackId.pop();
+/* 353 */         String s1 = (String)stackId.pop();
+/* 354 */         String oper = (String)stackOper.pop();
+/* 355 */         s1 = ":" + oper + "(" + s1 + "," + s2 + ")";
+/*     */ 
+/* 357 */         stackId.push(s1);
+/* 358 */         if (stackOper.empty()) {
+/*     */           break;
+/*     */         }
+/* 361 */         chtop = this.charType[((String)stackOper.peek()).charAt(0)];
+/*     */       }
+/* 363 */       string2 = string2 + ch;
+/*     */ 
+/* 365 */       stackOper.push(string2);
+/*     */     }
+/* 367 */     return index + 1;
+/*     */   }
+/*     */ 
+/*     */   private int accept_xiaokuohao(String string, int index, Stack<String> stackId, Stack<String> stackOper) {
+/* 371 */     String string2 = "";
+/* 372 */     int from = index + 1;
+/* 373 */     int kuohaocount = 0;
+/*     */     while (true) {
+/* 375 */       if (string.charAt(from) == '(') {
+/* 376 */         kuohaocount++;
+/*     */       }
+/* 378 */       if (string.charAt(from) == ')') {
+/* 379 */         kuohaocount--;
+/* 380 */         if (kuohaocount == -1) {
+/* 381 */           from++;
+/* 382 */           break;
+/*     */         }
+/*     */       }
+/*     */ 
+/* 386 */       string2 = string2 + string.charAt(from);
+/* 387 */       from++;
+/*     */     }
+/*     */ 
+/* 391 */     stackId.push(changeFrom(string2));
+/* 392 */     return from;
+/*     */   }
+/*     */   private String[] getOper(String str) {
+/* 395 */     if (str.charAt(0) == ':') {
+/* 396 */       String operString = ""; String v1 = ""; String v2 = "";
+/* 397 */       int index = 1;
+/* 398 */       while (str.charAt(index) != '(') {
+/* 399 */         operString = operString + str.charAt(index);
+/* 400 */         index++;
+/*     */       }
+/* 402 */       index++;
+/* 403 */       int jcount = 0;
+/* 404 */       while ((str.charAt(index) != ',') || (jcount != 0)) {
+/* 405 */         if (str.charAt(index) == '(') {
+/* 406 */           jcount++;
+/*     */         }
+/* 408 */         if (str.charAt(index) == ')') {
+/* 409 */           jcount--;
+/*     */         }
+/* 411 */         v1 = v1 + str.charAt(index);
+/* 412 */         index++;
+/*     */       }
+/* 414 */       index++;
+/* 415 */       while ((str.length() > index) && (
+/* 416 */         (str.charAt(index) != ')') || (jcount != 0))) {
+/* 417 */         if (str.charAt(index) == '(') {
+/* 418 */           jcount++;
+/*     */         }
+/* 420 */         if (str.charAt(index) == ')') {
+/* 421 */           jcount--;
+/*     */         }
+/* 423 */         v2 = v2 + str.charAt(index);
+/* 424 */         index++;
+/*     */       }
+/* 426 */       return new String[] { operString, v1, v2 };
+/*     */     }
+/* 428 */     return null;
+/*     */   }
+/*     */ 
+/*     */   public static void main(String[] args) {
+/* 432 */     VEasyFunctor vef = new VEasyFunctor();
+/*     */ 
+/* 434 */     vef.SetEquation("x1+pi");
+/* 435 */     vef.Given("x1", Float.valueOf(50.0F));
+/* 436 */     System.out.println(vef.Find());
+/* 437 */     System.out.println(vef.getFunctor());
+/*     */ 
+/* 440 */     String[] strsStrings = vef.GetUnGiven();
+/* 441 */     for (String str : strsStrings)
+/* 442 */       System.out.println(str);
+/*     */   }
+/*     */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     math.VEasyFunctor
+ * JD-Core Version:    0.6.0
+ */

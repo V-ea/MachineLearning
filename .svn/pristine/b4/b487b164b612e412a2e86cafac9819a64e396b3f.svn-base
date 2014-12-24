@@ -1,0 +1,201 @@
+/*     */package math;
+
+/*     */
+/*     */import java.util.HashMap;
+/*     */
+import java.util.Map;
+
+/*     */
+/*     */public class VMathUtil
+/*     */{
+	/* 13 */private Map<String, Integer> lengthmap = new HashMap();
+	/*     */private Map<String, Integer> idmap = new HashMap();
+
+	/*     */public VMathUtil() {
+		/* 16 */this.lengthmap.put("sin", Integer.valueOf(1));
+		/* 17 */this.lengthmap.put("cos", Integer.valueOf(1));
+		this.idmap.put("sin", Integer.valueOf(1));
+		/* 17 */this.idmap.put("cos", Integer.valueOf(2));
+		/*     */}
+
+	/*     */
+	/*     */public Float run(String str, Float[] floats) {
+		/* 21 */Integer len = (Integer) this.lengthmap.get(str);
+		/* 22 */if ((len == null) || (floats.length != len.intValue())) {
+			/*     */try
+			/*     */{
+				/* 25 */throw new Exception(
+						"no such function or parameters'count error:" + str
+								+ "\n");
+				/*     */}
+			/*     */catch (Exception e) {
+				/* 28 */e.printStackTrace();
+				/* 29 */System.exit(-1);
+				/*     */}
+			/*     */}
+		if (idmap.get(str) == null) {
+			System.out.println("error.");
+			return null;
+		}
+		/* 32 */switch (idmap.get(str))
+		/*     */{
+		/*     */case 1:
+			/* 35 */return Float.valueOf((float) Math.sin(floats[0]
+					.floatValue()));
+			/*     */case 2:
+			/* 39 */return Float.valueOf((float) Math.cos(floats[0]
+					.floatValue()));
+			/*     */}
+		/*     */
+		/* 45 */return Float.valueOf(0.0F);
+		/*     */}
+
+	/*     */
+	/*     */public String getPartial(String[] strs, String[] partial) {
+		/* 49 */Integer len = (Integer) this.lengthmap.get(strs[0]);
+		/* 50 */if ((len == null) || (strs.length != len.intValue() + 1)) {
+			/*     */try
+			/*     */{
+				/* 53 */throw new Exception(
+						"no such function or parameters'count error:" + strs[0]
+								+ "\n");
+				/*     */}
+			/*     */catch (Exception e) {
+				/* 56 */e.printStackTrace();
+				/* 57 */System.exit(-1);
+				/*     */}
+			/*     */}
+		if (idmap.get(strs[0]) == null) {
+			System.out.println("error.");
+			return null;
+		}
+		/* 60 */switch (idmap.get(strs[0]))
+		/*     */{
+		/*     */case 1:
+			/* 64 */return pp3(":cos(" + strs[1] + ")", partial[0]);
+			/*     */case 2:
+			/* 68 */return pp2("0", pp3(":sin(" + strs[1] + ")", partial[0]));
+			/*     */}
+		/*     */
+		/* 73 */return null;
+		/*     */}
+
+	/*     */private int getType(String str) {
+		/* 76 */if ((str.charAt(0) >= '0') &&
+		/* 77 */(str.charAt(0) <= '9')) {
+			/* 78 */return 1;
+			/*     */}
+		/* 80 */if (str.equals("e"))
+			/* 81 */return 1;
+		/* 82 */return 0;
+		/*     */}
+
+	/*     */private String pp1(String a, String b) {
+		/* 85 */if ((a.equals("0")) || (a.equals("0.0"))) {
+			/* 86 */return b;
+			/*     */}
+		/* 88 */if ((b.equals("0")) || (b.equals("0.0"))) {
+			/* 89 */return a;
+			/*     */}
+		/* 91 */if ((!a.equals("e")) && (!b.equals("e")) && (getType(a) == 1) &&
+		/* 92 */(getType(b) == 1)) {
+			/* 93 */return Float.parseFloat(a) + Float.parseFloat(b) + "";
+			/*     */}
+		/* 95 */return ":+(" + a + "," + b + ")";
+		/*     */}
+
+	/*     */
+	/*     */private String pp2(String a, String b) {
+		/* 99 */if ((b.equals("0")) || (b.equals("0.0"))) {
+			/* 100 */return a;
+			/*     */}
+		/* 102 */if (a.equals(b)) {
+			/* 103 */return "0";
+			/*     */}
+		/* 105 */if ((!a.equals("e")) && (!b.equals("e")) && (getType(a) == 1)
+				&&
+				/* 106 */(getType(b) == 1)) {
+			/* 107 */return Float.parseFloat(a) - Float.parseFloat(b) + "";
+			/*     */}
+		/* 109 */return ":-(" + a + "," + b + ")";
+		/*     */}
+
+	/*     */
+	/*     */private String pp3(String a, String b) {
+		/* 113 */if ((a.equals("0")) || (a.equals("0.0")) || (b.equals("0")) ||
+		/* 114 */(b.equals("0.0"))) {
+			/* 115 */return "0";
+			/*     */}
+		/* 117 */if ((a.equals("1")) || (a.equals("1.0"))) {
+			/* 118 */return b;
+			/*     */}
+		/* 120 */if ((b.equals("1")) || (b.equals("1.0"))) {
+			/* 121 */return a;
+			/*     */}
+		/*     */
+		/* 126 */if ((!a.equals("e")) && (!b.equals("e")) && (getType(a) == 1)
+				&&
+				/* 127 */(getType(b) == 1)) {
+			/* 128 */return Float.parseFloat(a) * Float.parseFloat(b) + "";
+			/*     */}
+		/* 130 */return ":*(" + a + "," + b + ")";
+		/*     */}
+
+	/*     */
+	/*     */private String pp5(String a, String b)
+	/*     */{
+		/* 136 */if ((a.equals("0")) || (a.equals("0.0"))) {
+			/* 137 */return "0";
+			/*     */}
+		/* 139 */if ((b.equals("0")) || (b.equals("0.0"))) {
+			/* 140 */return "1";
+			/*     */}
+		/* 142 */if ((b.equals("1")) || (b.equals("1.0"))) {
+			/* 143 */return a;
+			/*     */}
+		/* 145 */return ":^(" + a + "," + b + ")";
+		/*     */}
+
+	/*     */
+	/*     */private String pp4(String a, String b) {
+		/* 149 */if ((a.equals("0")) || (a.equals("0.0"))) {
+			/* 150 */return "0";
+			/*     */}
+		/* 152 */if ((b.equals("0")) || (b.equals("0.0"))) {
+			/*     */try {
+				/* 154 */throw new Exception("/ Zero ");
+				/*     */}
+			/*     */catch (Exception e) {
+				/* 157 */e.printStackTrace();
+				/*     */}
+			/*     */}
+		/* 160 */if ((!a.equals("e")) && (!b.equals("e")) && (getType(a) == 1)
+				&&
+				/* 161 */(getType(b) == 1)) {
+			/* 162 */return Float.parseFloat(a) / Float.parseFloat(b) + "";
+			/*     */}
+		/* 164 */return ":/(" + a + "," + b + ")";
+		/*     */}
+
+	/*     */
+	/*     */public static void main(String[] args)
+	/*     */{
+		/* 172 */Func.get("sin");
+		/*     */}
+
+	/*     */
+	/*     */public static enum Func
+	/*     */{
+		/* 8 */sin, cos;
+		/*     */
+		/* 10 */public static Func get(String animal) {
+			return valueOf(animal.toLowerCase());
+			/*     */}
+		/*     */
+	}
+	/*     */
+}
+
+/*
+ * Location: E:\EAMath.jar Qualified Name: math.VMathUtil JD-Core Version: 0.6.0
+ */

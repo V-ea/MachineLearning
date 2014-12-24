@@ -1,0 +1,49 @@
+package impl;
+
+import data.VTrainSet.Row;
+
+public abstract class VGradientMethod extends VFeatureSameSizeMethod{
+
+	@Override
+	public int Calculate() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int PreCalculate() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int PostCalculate() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Object Predict(Row row) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int UnSerialize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int Serialize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean CheckAllRight(Row row) throws Exception {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

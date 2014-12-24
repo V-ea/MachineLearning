@@ -1,0 +1,201 @@
+/*     */ package impl;
+/*     */ 
+/*     */ import data.VTrainSet;
+/*     */ import data.VTrainSet.Row;
+/*     */ import java.io.PrintStream;
+/*     */ import java.util.Arrays;
+/*     */ import similarity.VEuclideanMetricSimilarity;
+/*     */ import util.VSimilarity;
+/*     */ 
+/*     */ public class VK_Means4PointMethod extends VFeatureSameSizeMethod
+/*     */ {
+/*  15 */   private int k = 0;
+/*  16 */   private int[] center = null;
+/*  17 */   private int[] surr = null;
+/*  18 */   private boolean isEnd = true;
+/*  19 */   private VSimilarity similarity = new VEuclideanMetricSimilarity();
+/*     */ 
+/*     */   public int getK() {
+/*  22 */     return this.k;
+/*     */   }
+/*     */ 
+/*     */   public void setK(int k) {
+/*  26 */     this.k = k;
+/*     */   }
+/*     */ 
+/*     */   private void CalculateOnce() {
+/*  30 */     this.isEnd = true;
+/*  31 */     for (int ii = 0; ii < getRowSize(); ii++) {
+/*  32 */       float smallest = 0.0F;
+/*  33 */       int smallestindex = 0;
+/*  34 */       VTrainSet.Row[] rows = this.data.getValue();
+/*  35 */       smallest = this.similarity.Similarity(rows[ii], rows[this.center[0]]);
+/*  36 */       for (int jj = 1; jj < this.k; jj++) {
+/*  37 */         float tm = this.similarity.Similarity(rows[ii], 
+/*  38 */           rows[this.center[jj]]);
+/*  39 */         if (tm < smallest) {
+/*  40 */           smallest = tm;
+/*  41 */           smallestindex = jj;
+/*     */         }
+/*     */       }
+/*     */ 
+/*  45 */       if (this.surr[ii] != smallestindex)
+/*     */       {
+/*  47 */         this.isEnd = false;
+/*     */       }
+/*  49 */       this.surr[ii] = smallestindex;
+/*     */     }
+/*     */   }
+/*     */ 
+/*     */   private int[] CalculateCenter() {
+/*  54 */     float[][] csum = new float[this.k][getColumnSize()];
+/*  55 */     int[] count = new int[this.k];
+/*  56 */     for (int u = 0; u < this.k; u++)
+/*  57 */       count[u] = 0;
+/*  58 */     for (int l = 0; l < getRowSize(); l++) {
+/*  59 */       for (int m = 0; m < getColumnSize(); m++) {
+/*  60 */         csum[this.surr[l]][m] += ((Float)this.data.getValue()[l].getArray()[m]).floatValue();
+/*     */       }
+/*     */ 
+/*  63 */       count[this.surr[l]] += 1;
+/*     */     }
+/*  65 */     int[] smallestindex = new int[this.k];
+/*  66 */     float[] smallest = new float[this.k];
+/*  67 */     for (int h = 0; h < this.k; h++)
+/*  68 */       smallestindex[h] = 0;
+/*  69 */     for (int l = 0; l < getRowSize(); l++) {
+/*  70 */       if (smallestindex[this.surr[l]] == 0) {
+/*  71 */         smallestindex[this.surr[l]] = l;
+/*  72 */         smallest[this.surr[l]] = 0.0F;
+/*  73 */         for (int m = 0; m < getColumnSize(); m++) {
+/*  74 */           float a = ((Float)this.data.getValue()[l].getArray()[m]).floatValue();
+/*  75 */           float b = csum[this.surr[l]][m] / count[this.surr[l]];
+/*  76 */           smallest[this.surr[l]] += (a - b) * (a - b);
+/*     */         }
+/*     */       }
+/*     */       else {
+/*  80 */         float ys = 0.0F;
+/*  81 */         for (int m = 0; m < getColumnSize(); m++) {
+/*  82 */           float a = ((Float)this.data.getValue()[l].getArray()[m]).floatValue();
+/*  83 */           float b = csum[this.surr[l]][m] / count[this.surr[l]];
+/*  84 */           ys += (a - b) * (a - b);
+/*     */         }
+/*     */ 
+/*  87 */         if (ys < smallest[this.surr[l]]) {
+/*  88 */           smallestindex[this.surr[l]] = l;
+/*  89 */           smallest[this.surr[l]] = ys;
+/*     */         }
+/*     */       }
+/*     */ 
+/*     */     }
+/*     */ 
+/*  95 */     return smallestindex;
+/*     */   }
+/*     */ 
+/*     */   private boolean CalculateEndPoint(int[] newCenterIndex) {
+/*  99 */     if (!this.isEnd) return false;
+/* 100 */     for (int kk = 0; kk < this.k; kk++) {
+/* 101 */       if (newCenterIndex[kk] != this.center[kk]) {
+/* 102 */         this.center = Arrays.copyOf(newCenterIndex, this.k);
+/* 103 */         return false;
+/*     */       }
+/*     */     }
+/*     */ 
+/* 107 */     return true;
+/*     */   }
+/*     */ 
+/*     */   public int Calculate()
+/*     */   {
+/* 113 */     CalculateOnce();
+/* 114 */     int[] newCenterIndex = CalculateCenter();
+/* 115 */     while (!CalculateEndPoint(newCenterIndex)) {
+/* 116 */       CalculateOnce();
+/* 117 */       newCenterIndex = CalculateCenter();
+/*     */     }
+/* 119 */     return 0;
+/*     */   }
+/*     */ 
+/*     */   public int PreCalculate()
+/*     */   {
+/* 125 */     this.center = new int[this.k];
+/* 126 */     int[] used = new int[this.k];
+/* 127 */     for (int kf = 0; kf < this.k; kf++) used[kf] = 0;
+/* 128 */     int len = getRowSize();
+/* 129 */     for (int kjj = 0; kjj < this.k; kjj++) {
+/* 130 */       if (kjj < len)
+/*     */       {
+/* 132 */         int l = (int)(Math.random() * this.k);
+/* 133 */         while (used[l] == 1)
+/*     */         {
+/* 135 */           l = (int)(Math.random() * this.k);
+/*     */         }
+/* 137 */         used[l] = 1;
+/* 138 */         this.center[kjj] = l;
+/*     */       } else {
+/* 140 */         this.center[kjj] = 0;
+/*     */       }
+/*     */     }
+/*     */ 
+/* 144 */     this.surr = new int[getRowSize()];
+/*     */     try
+/*     */     {
+/* 147 */       CheckAllRight();
+/*     */     }
+/*     */     catch (Exception e) {
+/* 150 */       e.printStackTrace();
+/*     */     }
+/* 152 */     return 0;
+/*     */   }
+/*     */ 
+/*     */   public int PostCalculate()
+/*     */   {
+/* 158 */     System.out.println("center is:");
+/* 159 */     for (int j = 0; j < this.k; j++) {
+/* 160 */       for (int m = 0; m < getColumnSize(); m++) {
+/* 161 */         System.out.print("(" + 
+/* 162 */           this.data.getValue()[this.center[j]].getArray()[m] + 
+/* 163 */           ")");
+/*     */       }
+/* 165 */       System.out.println();
+/*     */     }
+/* 167 */     return 0;
+/*     */   }
+/*     */ 
+/*     */   public VK_Means4PointMethod(int k)
+/*     */   {
+/* 172 */     this.k = k;
+/*     */   }
+/*     */ 
+/*     */   public Object Predict(VTrainSet.Row row)
+/*     */   {
+/* 178 */     return null;
+/*     */   }
+/*     */ 
+/*     */   public int UnSerialize()
+/*     */   {
+/* 184 */     return 0;
+/*     */   }
+/*     */ 
+/*     */   public int Serialize()
+/*     */   {
+/* 190 */     return 0;
+/*     */   }
+/*     */ 
+/*     */   public boolean CheckAllRight(VTrainSet.Row row)
+/*     */     throws Exception
+/*     */   {
+/* 196 */     return this.similarity.CheckAllRight(row);
+/*     */   }
+/*     */ 
+/*     */   public boolean CheckAllRight() throws Exception {
+/* 200 */     for (int j = 0; j < getRowSize(); j++) {
+/* 201 */       CheckAllRight(this.data.getValue()[j]);
+/*     */     }
+/* 203 */     return true;
+/*     */   }
+/*     */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     impl.VK_Means4PointMethod
+ * JD-Core Version:    0.6.0
+ */

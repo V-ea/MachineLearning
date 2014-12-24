@@ -1,0 +1,68 @@
+/*    */ package impl;
+/*    */ 
+/*    */ import data.VTrainSet;
+import data.VTrainSet.Row;
+/*    */ import math.VEasyFunctor;
+/*    */ 
+/*    */ public abstract class VExtremalMethod extends VFeatureSameSizeMethod
+/*    */ {
+/*  8 */   private VEasyFunctor calcFunctor = new VEasyFunctor();
+/*  9 */   private VEasyFunctor partialFunctor = new VEasyFunctor();
+/*    */ 
+/*    */   public int Calculate()
+/*    */   {
+/* 13 */     return 0;
+/*    */   }
+/*    */ 
+/*    */   public int PreCalculate()
+/*    */   {
+/* 19 */     return 0;
+/*    */   }
+/*    */ 
+/*    */   public VEasyFunctor getCalcFunctor() {
+/* 23 */     return this.calcFunctor;
+/*    */   }
+/*    */ 
+/*    */   public void setCalcFunctor(VEasyFunctor calcFunctor) {
+/* 27 */     this.calcFunctor = calcFunctor;
+/*    */   }
+/*    */ 
+/*    */   public VEasyFunctor getPartialFunctor() {
+/* 31 */     return this.partialFunctor;
+/*    */   }
+/*    */ 
+/*    */   public void setPartialFunctor(VEasyFunctor partialFunctor) {
+/* 35 */     this.partialFunctor = partialFunctor;
+/*    */   }
+/*    */ 
+/*    */   public int PostCalculate()
+/*    */   {
+/* 41 */     return 0;
+/*    */   }
+/*    */ 
+/*    */   public Object Predict(VTrainSet.Row row)
+/*    */   {
+/* 47 */     return null;
+/*    */   }
+/*    */ 
+/*    */   public int UnSerialize()
+/*    */   {
+/* 53 */     return 0;
+/*    */   }
+/*    */ 
+/*    */   public int Serialize()
+/*    */   {
+/* 59 */     return 0;
+/*    */   }
+/*    */ 
+/*    */   public boolean CheckAllRight(VTrainSet.Row row)
+/*    */     throws Exception
+/*    */   {
+/* 65 */     return false;
+/*    */   }
+/*    */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     impl.VExtremalMethod
+ * JD-Core Version:    0.6.0
+ */

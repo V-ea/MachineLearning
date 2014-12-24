@@ -1,0 +1,69 @@
+/*    */ package impl;
+/*    */ 
+/*    */ import data.VClass;
+/*    */ import data.VTrainSet;
+/*    */ import data.VTrainSet.Row;
+/*    */ import exception.VNotSameSizeException;
+/*    */ import java.util.Arrays;
+/*    */ import util.VMethod;
+/*    */ 
+/*    */ public abstract class VFeatureSizeNoMatterMethod
+/*    */   implements VMethod
+/*    */ {
+/* 18 */   protected VTrainSet data = null;
+/* 19 */   protected VClass class1 = null;
+/* 20 */   private int rowSize = 0;
+/*    */ 
+/* 24 */   public static Integer NOT_GIVEN_CLASS = Integer.valueOf(-1);
+/*    */ 
+/*    */   public int getRowSize() {
+/* 27 */     return this.rowSize;
+/*    */   }
+/*    */ 
+/*    */   public void setRowSize(int rowSize) {
+/* 31 */     this.rowSize = rowSize;
+/*    */   }
+/*    */ 
+/*    */   public int Accept(VTrainSet trainSet, VClass class1)
+/*    */     throws Exception
+/*    */   {
+/* 38 */     this.data = trainSet;
+/* 39 */     this.class1 = class1;
+/* 40 */     if (this.data.getValue().length != this.class1.valueObjects.length)
+/*    */     {
+/* 42 */       throw new VNotSameSizeException(
+/* 43 */         "The Rows are not in the Same size.");
+/*    */     }
+/* 45 */     this.rowSize = this.data.getValue().length;
+/* 46 */     return 0;
+/*    */   }
+/*    */ 
+/*    */   public int Append(VTrainSet trainSet, VClass class1)
+/*    */     throws Exception
+/*    */   {
+/* 53 */     int trainSetLen = trainSet.getValue().length;
+/* 54 */     if (this.data.getValue().length != this.class1.valueObjects.length)
+/*    */     {
+/* 56 */       throw new VNotSameSizeException(
+/* 57 */         "The Rows are not in the Same size.");
+/*    */     }
+/* 59 */     this.rowSize += trainSetLen;
+/* 60 */     VTrainSet.Row[] rows = this.data.getValue();
+/* 61 */     VTrainSet.Row[] newRows = (VTrainSet.Row[])Arrays.copyOf(rows, this.rowSize);
+/* 62 */     System.arraycopy(trainSet.getValue(), 0, newRows, rows.length, 
+/* 63 */       trainSetLen);
+/*    */ 
+/* 65 */     this.data.setValue(newRows);
+/* 66 */     Object[] classes = this.class1.valueObjects;
+/* 67 */     Object[] newClasses = Arrays.copyOf(classes, this.rowSize);
+/* 68 */     System.arraycopy(class1.valueObjects, 0, newClasses, classes.length, 
+/* 69 */       trainSetLen);
+/* 70 */     this.class1.valueObjects = newClasses;
+/* 71 */     return 0;
+/*    */   }
+/*    */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     impl.VFeatureSizeNoMatterMethod
+ * JD-Core Version:    0.6.0
+ */

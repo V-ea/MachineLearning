@@ -1,0 +1,246 @@
+/*     */ package math;
+/*     */ 
+/*     */ import java.io.IOException;
+/*     */ import java.io.PrintStream;
+/*     */ import java.util.HashMap;
+/*     */ import java.util.LinkedList;
+/*     */ import java.util.Map;
+/*     */ import java.util.Queue;
+/*     */ import java.util.Scanner;
+/*     */ 
+/*     */ public class VShell
+/*     */ {
+/*  12 */   private int history_count = 0;
+/*  13 */   private Queue<String> cmd_historyQueue = new LinkedList();
+/*  14 */   private VEasyFunctor lastFunctor = new VEasyFunctor();
+/*  15 */   private Map<String, VEasyFunctor> mapAssignedMap = new HashMap();
+/*     */ 
+/*     */   public void waitForInput()
+/*     */   {
+/*  19 */     System.out.print("ea>>>" + this.history_count + ":");
+/*  20 */     this.history_count += 1;
+/*  21 */     Scanner scanner = new Scanner(System.in);
+/*  22 */     String string = scanner.nextLine();
+/*     */     try {
+/*  24 */       handler(string);
+/*  25 */       this.cmd_historyQueue.add(string);
+/*     */     }
+/*     */     catch (Exception localException)
+/*     */     {
+/*     */     }
+/*     */   }
+/*     */ 
+/*     */   private void handler(String s)
+/*     */   {
+/*  34 */     s = s.toLowerCase().trim();
+/*  35 */     if (is(s, "exit")) {
+/*  36 */       System.out.println("GoodBye.");
+/*  37 */       System.exit(0); } else {
+/*  38 */       if (is(s, "history"))
+/*     */       {
+/*  40 */         for (String x : this.cmd_historyQueue) {
+/*  41 */           System.out.println(x);
+/*     */         }
+/*  43 */         return;
+/*  44 */       }if (is(s, "help"))
+/*     */       {
+/*  46 */         help();
+/*  47 */         return;
+/*     */       }
+/*  49 */       if (s.startsWith("ungiven ")) {
+/*  50 */         String p = s.substring(8);
+/*  51 */         if (this.mapAssignedMap.containsKey(p)) {
+/*  52 */           for (String str11 : ((VEasyFunctor)this.mapAssignedMap.get(p)).GetUnGiven())
+/*  53 */             System.out.println(str11);
+/*  54 */           System.out.println("are not given.give value to them.");
+/*     */         }
+/*     */         else {
+/*  57 */           System.out.println("error:no such equation.");
+/*     */         }
+/*  59 */         return;
+/*  60 */       }if (s.startsWith("partial ")) {
+/*  61 */         String p = s.substring(8);
+/*  62 */         String[] ps = p.trim().split(" ");
+/*  63 */         if (ps.length != 3)
+/*     */         {
+/*  65 */           System.out.println("Usage:partial [function] [partial] [partial-x]");
+/*     */         }
+/*     */         else
+/*     */         {
+/*  69 */           ps[0] = ps[0].trim();
+/*  70 */           ps[1] = ps[1].trim();
+/*  71 */           ps[2] = ps[2].trim();
+/*  72 */           if ((!checkIden(ps[0])) || (!checkIden(ps[1])) || (!checkIden(ps[1])))
+/*     */           {
+/*  74 */             System.out.println("function name or partial name must be identifiers.[a-zA-Z0-9_]");
+/*  75 */             return;
+/*     */           }
+/*  77 */           if (this.mapAssignedMap.containsKey(ps[1]))
+/*     */           {
+/*  79 */             System.out.println("error:target has been set,choose another partial name.");
+/*  80 */             return;
+/*     */           }
+/*  82 */           if (this.mapAssignedMap.containsKey(ps[0].trim())) {
+/*  83 */             VEasyFunctor vef = (VEasyFunctor)this.mapAssignedMap.get(ps[0].trim());
+/*  84 */             this.mapAssignedMap.put(ps[1], vef.Partial(ps[2].trim()));
+/*  85 */             System.out.println("done.");
+/*     */           }
+/*     */           else
+/*     */           {
+/*  89 */             System.out.println("error:" + p + " this function is not given.");
+/*     */           }
+/*     */         }
+/*  92 */         return;
+/*  93 */       }if (s.startsWith("calc ")) {
+/*  94 */         String p = s.substring(5).trim();
+/*  95 */         if (!checkIden(p))
+/*     */         {
+/*  97 */           System.out.println("function name or partial name must be identifiers.[a-zA-Z0-9_]");
+/*  98 */           return;
+/*     */         }
+/* 100 */         System.out.println("calculating...");
+/* 101 */         if (this.mapAssignedMap.containsKey(p)) {
+/* 102 */           VEasyFunctor vef = (VEasyFunctor)this.mapAssignedMap.get(p);
+/* 103 */           Float result = Float.valueOf(0.0F);
+/* 104 */           result = Float.valueOf(Calc(vef, 1));
+/*     */ 
+/* 106 */           System.out.println("ans=" + result);
+/*     */ 
+/* 108 */           this.mapAssignedMap.put("ans", new VEasyFunctor().SetEquation(result+""));
+/*     */         }
+/*     */         else {
+/* 111 */           System.out.println("error:" + p + " is not defined/set.");
+/*     */         }
+/* 113 */         return;
+/*     */       }
+/* 115 */       if (isassign(s)) {
+/* 116 */         int len = s.length();
+/* 117 */         s = s.toLowerCase();
+/* 118 */         int i = 0;
+/* 119 */         String left = ""; String right = "";
+/* 120 */         while (i < len)
+/* 121 */           if ((i == 0) && (s.charAt(i) >= 'a') && (s.charAt(i) <= 'z')) {
+/* 122 */             left = left + s.charAt(i);
+/* 123 */             i++;
+/*     */           }
+/*     */           else
+/*     */           {
+/* 128 */             if (i == 0)
+/*     */             {
+/* 130 */               System.out.println("function name or partial name must be identifiers.[a-zA-Z0-9_]");
+/* 131 */               return;
+/*     */             }
+/*     */ 
+/* 134 */             if (((s.charAt(i) < 'a') || (s.charAt(i) > 'z')) && 
+/* 135 */               ((s.charAt(i) < '0') || (s.charAt(i) > '9')) && (s.charAt(i) != '_')) break;
+/* 136 */             left = left + s.charAt(i);
+/*     */ 
+/* 140 */             i++;
+/*     */           }
+/* 142 */         if (i >= len) {
+/* 143 */           if (this.mapAssignedMap.containsKey(left)) {
+/* 144 */             System.out.println(((VEasyFunctor)this.mapAssignedMap.get(left)).GetEquation());
+/*     */           }
+/* 146 */           return;
+/*     */         }
+/* 148 */         if ((i <= len - 2) && (s.charAt(i) == '=')) {
+/* 149 */           i++;
+/* 150 */           while (i < len) {
+/* 151 */             right = right + s.charAt(i);
+/* 152 */             i++;
+/*     */           }
+/* 154 */           VEasyFunctor vef = new VEasyFunctor();
+/* 155 */           vef.SetEquation(right);
+/* 156 */           if (this.mapAssignedMap.containsKey(left)) {
+/* 157 */             System.out.println("old:" + 
+/* 158 */               ((VEasyFunctor)this.mapAssignedMap.get(left)).GetEquation());
+/*     */           }
+/* 160 */           System.out.println("[" + left + "]=" + vef.GetEquation());
+/* 161 */           this.mapAssignedMap.put(left, vef);
+/*     */         } else {
+/* 163 */           System.out.println("function name must be identifiers.[a-zA-Z0-9_]");
+/*     */         }
+/*     */       }
+/*     */     }
+/*     */   }
+/*     */ 
+/*     */   private boolean checkIden(String s) {
+/* 169 */     int i = 0;
+/* 170 */     int len = s.length();
+/* 171 */     while (i < len) {
+/* 172 */       if ((i != 0) || (s.charAt(i) < 'a') || (s.charAt(i) > 'z'))
+/*     */       {
+/* 174 */         if (((s.charAt(i) < 'a') || (s.charAt(i) > 'z')) && 
+/* 175 */           ((s.charAt(i) < '0') || (s.charAt(i) > '9')) && (s.charAt(i) != '_'))
+/*     */         {
+/* 178 */           return false;
+/*     */         }
+/*     */       }
+/* 180 */       i++;
+/*     */     }
+/* 182 */     return true;
+/*     */   }
+/*     */ 
+/*     */   private void help()
+/*     */   {
+/* 187 */     System.out.println("\t1.You can Assign Function Like this: ");
+/* 188 */     System.out.println("\t\t\ty=x+1");
+/* 189 */     System.out.println("\t*caution:Don't write any blank here.");
+/* 190 */     System.out.println("\t2.for partial .\n\t\t\tpartial [function] [target_function] [partial_variable]");
+/* 191 */     System.out.println("\t3.for calculating.\n\t\t\tcalc [variable/function]");
+/* 192 */     System.out.println("\t4.for exit\n\t\t\texit");
+/* 193 */     System.out.println("\t5.for history commands.\n\t\t\thistory");
+/* 194 */     System.out.println("\t6.to see the values need to give/assign.\n\t\t\tungiven [function]");
+/* 195 */     System.out.println("\t\t\t\t\tWISH YOU HAVE FUN~!\n\t\t\t\t\t\tEAPCHEN/CHENYIPU");
+/*     */   }
+/*     */ 
+/*     */   private float Calc(VEasyFunctor vef, int deeps)
+/*     */   {
+/* 200 */     if (deeps == 30)
+/*     */     {
+/* 202 */       System.out.println("error:endless running...shutdown.");
+/* 203 */       return 0.0F;
+/*     */     }
+/* 205 */     String[] strs = vef.GetUnGiven();
+/*     */ 
+/* 207 */     for (String str11 : strs)
+/*     */     {
+/* 210 */       if (!this.mapAssignedMap.containsKey(str11.trim())) {
+/*     */         continue;
+/*     */       }
+/* 213 */       VEasyFunctor vef2 = (VEasyFunctor)this.mapAssignedMap.get(str11.trim());
+/* 214 */       float sFloat = 0.0F;
+/*     */ 
+/* 216 */       sFloat = Calc(vef2, deeps + 1);
+/*     */ 
+/* 218 */       vef.Given(str11.trim(), Float.valueOf(sFloat));
+/*     */     }
+/*     */ 
+/* 221 */     return vef.Find().floatValue();
+/*     */   }
+/*     */ 
+/*     */   private boolean isassign(String s)
+/*     */   {
+/* 226 */     return s.charAt(0) != ':';
+/*     */   }
+/*     */ 
+/*     */   private boolean is(String str1, String str)
+/*     */   {
+/* 232 */     return str1.equals(str);
+/*     */   }
+/*     */ 
+/*     */   public static void main(String[] args) throws IOException {
+/* 236 */     VShell shell = new VShell();
+/* 237 */     System.out.println(" ---------------------------------------------");
+/* 238 */     System.out.println("|| MATH TOOLS By EapChen. ALL RIGHTS RESERVED.||");
+/* 239 */     System.out.println("|| EMAIL:390270720@qq.com                     ||");
+/* 240 */     System.out.println(" ---------------------------------------------");
+/*     */     while (true)
+/* 242 */       shell.waitForInput();
+/*     */   }
+/*     */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     math.VShell
+ * JD-Core Version:    0.6.0
+ */

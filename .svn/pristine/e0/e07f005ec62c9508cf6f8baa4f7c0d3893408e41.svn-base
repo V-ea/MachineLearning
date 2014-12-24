@@ -1,0 +1,15 @@
+/*    */ package data;
+/*    */ 
+/*    */ public class VClass
+/*    */ {
+/*  7 */   public Object[] variety = null;
+/*    */ 
+/* 11 */   public Object[] valueObjects = null;
+/*    */ 
+/* 15 */   public static Integer NOT_GIVEN_CLASS = Integer.valueOf(-1);
+/*    */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     data.VClass
+ * JD-Core Version:    0.6.0
+ */

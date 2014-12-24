@@ -1,0 +1,48 @@
+/*    */ package data;
+/*    */ 
+/*    */ import java.util.Arrays;
+/*    */ 
+/*    */ public class VTrainSet
+/*    */ {
+/* 31 */   private String[] ColumnName = null;
+/*    */ 
+/* 35 */   private Row[] Value = null;
+/*    */ 
+/* 37 */   public String[] getColumnName() { return this.ColumnName; }
+/*    */ 
+/*    */   public void setColumnName(String[] columnName) {
+/* 40 */     this.ColumnName = columnName;
+/*    */   }
+/*    */   public Row[] getValue() {
+/* 43 */     return this.Value;
+/*    */   }
+/*    */   public void setValue(Row[] value) {
+/* 46 */     this.Value = value;
+/*    */   }
+/*    */ 
+/*    */   public class Row
+/*    */   {
+/* 10 */     private Object[] Array = null;
+/*    */ 
+/*    */     public Row() {
+/*    */     }
+/*    */ 
+/*    */     public Row(Object[] array) {
+/* 16 */       this.Array = array;
+/*    */     }
+/*    */ 
+/*    */     public Object[] getArray() {
+/* 20 */       return this.Array;
+/*    */     }
+/*    */ 
+/*    */     public void setArray(Object[] array)
+/*    */     {
+/* 25 */       this.Array = Arrays.copyOf(array, array.length);
+/*    */     }
+/*    */   }
+/*    */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     data.VTrainSet
+ * JD-Core Version:    0.6.0
+ */

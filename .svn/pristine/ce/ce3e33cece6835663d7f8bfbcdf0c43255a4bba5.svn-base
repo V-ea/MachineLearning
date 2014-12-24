@@ -1,0 +1,41 @@
+/*    */ package similarity;
+/*    */ 
+/*    */ import data.VTrainSet;
+import data.VTrainSet.Row;
+/*    */ import exception.VUsageException;
+/*    */ import util.VSimilarity;
+/*    */ 
+/*    */ public class VEuclideanMetricSimilarity
+/*    */   implements VSimilarity
+/*    */ {
+/*  8 */   private int Length = 0;
+/*    */ 
+/*    */   public boolean CheckAllRight(VTrainSet.Row row) throws Exception
+/*    */   {
+/* 12 */     if (this.Length == 0) {
+/* 13 */       this.Length = row.getArray().length;
+/*    */     }
+/* 15 */     else if (this.Length != row.getArray().length)
+/*    */     {
+/* 17 */       throw new VUsageException();
+/*    */     }
+/*    */ 
+/* 20 */     return true;
+/*    */   }
+/*    */ 
+/*    */   public float Similarity(VTrainSet.Row row1, VTrainSet.Row row2)
+/*    */   {
+/* 26 */     float total = 0.0F;
+/* 27 */     for (int i = 0; i < this.Length; i++)
+/*    */     {
+/* 30 */       total = total + (((Float)row2.getArray()[i]).floatValue() - ((Float)row1.getArray()[i]).floatValue()) * (
+/* 30 */         ((Float)row2.getArray()[i]).floatValue() - ((Float)row1.getArray()[i]).floatValue());
+/*    */     }
+/* 32 */     return (float)Math.sqrt(total);
+/*    */   }
+/*    */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     similarity.VEuclideanMetricSimilarity
+ * JD-Core Version:    0.6.0
+ */

@@ -1,0 +1,498 @@
+/*     */ package math;
+/*     */ 
+/*     */ import exception.VCalculateException;
+/*     */ import java.io.PrintStream;
+/*     */ import java.util.HashMap;
+/*     */ import java.util.Map;
+/*     */ 
+/*     */ public class VFunctor
+/*     */ {
+/*   9 */   private String Equation = null;
+/*  10 */   private Map<String, Float> valueMap = new HashMap();
+/*     */ 
+/*  12 */   private Map<String, Float> constValueMap = new HashMap();
+/*     */ 
+/*     */   public VFunctor()
+/*     */   {
+/*  16 */     this.constValueMap.put("pi", Float.valueOf(3.141593F));
+/*     */   }
+/*     */ 
+/*     */   public VFunctor SetEquation(String str) {
+/*  20 */     this.Equation = str;
+/*  21 */     return this;
+/*     */   }
+/*     */ 
+/*     */   public String GetEquation() {
+/*  25 */     return this.Equation;
+/*     */   }
+/*     */ 
+/*     */   public int GetConstSize() {
+/*  29 */     return this.constValueMap.size() + 1;
+/*     */   }
+/*     */ 
+/*     */   public boolean IsConst(String string) {
+/*  33 */     if (string.equals("e")) {
+/*  34 */       return true;
+/*     */     }
+/*     */ 
+/*  38 */     return this.constValueMap.containsKey(string);
+/*     */   }
+/*     */ 
+/*     */   public VFunctor Given(String x, Float value)
+/*     */   {
+/*  45 */     this.valueMap.put(x, value);
+/*  46 */     return this;
+/*     */   }
+/*     */ 
+/*     */   public Float Find() {
+/*  50 */     return calc(this.Equation);
+/*     */   }
+/*     */ 
+/*     */   public VFunctor Partial(String partialVariable) {
+/*  54 */     String str = partial(this.Equation, partialVariable);
+/*  55 */     VFunctor vFunctor = new VFunctor();
+/*  56 */     vFunctor.SetEquation(str);
+/*  57 */     return vFunctor;
+/*     */   }
+/*     */ 
+/*     */   public VFunctor TransformAs(String variable) {
+/*  61 */     return null;
+/*     */   }
+/*     */ 
+/*     */   private String transform(String str) {
+/*  65 */     return str;
+/*     */   }
+/*     */ 
+/*     */   private Float calc(String str)
+/*     */   {
+/*  70 */     if (str.charAt(0) == ':') {
+/*  71 */       String[] opers = getOper(str);
+/*  72 */       if (opers == null) {
+/*     */         try {
+/*  74 */           throw new VCalculateException();
+/*     */         }
+/*     */         catch (VCalculateException e) {
+/*  77 */           e.printStackTrace();
+/*     */         }
+/*     */       }
+/*  80 */       if (opers.length == 3) {
+/*  81 */         String oper1 = opers[1];
+/*  82 */         String oper2 = opers[2];
+/*  83 */         if (opers[0].equals("+"))
+/*  84 */           return a1(calc(oper1), calc(oper2));
+/*  85 */         if (opers[0].equals("-"))
+/*  86 */           return a2(calc(oper1), calc(oper2));
+/*  87 */         if (opers[0].equals("*"))
+/*  88 */           return a3(calc(oper1), calc(oper2));
+/*  89 */         if (opers[0].equals("/"))
+/*  90 */           return a4(calc(oper1), calc(oper2));
+/*  91 */         if (opers[0].equals("^"))
+/*  92 */           return a5(calc(oper1), calc(oper2));
+/*  93 */         if (opers[0].equals("radical"))
+/*  94 */           return a6(calc(oper1), calc(oper2));
+/*  95 */         if (opers[0].equals("log"))
+/*  96 */           return a7(calc(oper1), calc(oper2));
+/*     */       }
+/*     */       else {
+/*  99 */         Float[] fsFloat = new Float[opers.length - 1];
+/* 100 */         for (int ilj = 0; ilj < opers.length - 1; ilj++)
+/*     */         {
+/* 102 */           fsFloat[ilj] = calc(opers[(ilj + 1)]);
+/*     */         }
+/* 104 */         return new VMathUtil().run(opers[0], fsFloat);
+/*     */       }
+/*     */     } else {
+/* 106 */       if (getType(str) == 1) {
+/* 107 */         if (str.equals("e"))
+/*     */         {
+/* 109 */           return Float.valueOf(2.718282F);
+/*     */         }
+/* 111 */         String hh = "";
+/* 112 */         hh = hh + str.charAt(0);
+/* 113 */         if (str.length() == 1)
+/* 114 */           return Float.valueOf(Float.parseFloat(hh));
+/* 115 */         int index1 = 1;
+/* 116 */         while ((str.length() > index1) && (
+/* 117 */           ((str.charAt(index1) >= '0') && (str.charAt(index1) <= '9')) || 
+/* 118 */           (str
+/* 118 */           .charAt(index1) == '.'))) {
+/* 119 */           hh = hh + str.charAt(index1);
+/* 120 */           index1++;
+/*     */         }
+/* 122 */         return Float.valueOf(Float.parseFloat(hh));
+/*     */       }
+/* 124 */       if (this.constValueMap.containsKey(str))
+/* 125 */         return (Float)this.constValueMap.get(str);
+/* 126 */       if (this.valueMap.containsKey(str)) {
+/* 127 */         return (Float)this.valueMap.get(str);
+/*     */       }
+/* 129 */       System.out.println("[" + str + "] is not given.");
+/*     */       try {
+/* 131 */         throw new VCalculateException();
+/*     */       }
+/*     */       catch (VCalculateException e) {
+/* 134 */         e.printStackTrace();
+/*     */       }
+/*     */     }
+/*     */ 
+/* 138 */     return null;
+/*     */   }
+/*     */ 
+/*     */   private Float a1(Float v1, Float v2)
+/*     */   {
+/* 143 */     return Float.valueOf(v1.floatValue() + v2.floatValue());
+/*     */   }
+/*     */ 
+/*     */   private Float a2(Float v1, Float v2) {
+/* 147 */     return Float.valueOf(v1.floatValue() - v2.floatValue());
+/*     */   }
+/*     */ 
+/*     */   private Float a3(Float v1, Float v2) {
+/* 151 */     return Float.valueOf(v1.floatValue() * v2.floatValue());
+/*     */   }
+/*     */ 
+/*     */   private Float a4(Float v1, Float v2) {
+/* 155 */     return Float.valueOf(v1.floatValue() / v2.floatValue());
+/*     */   }
+/*     */ 
+/*     */   private Float a5(Float v1, Float v2)
+/*     */   {
+/* 160 */     return Float.valueOf((float)Math.pow(v1.floatValue(), v2.floatValue()));
+/*     */   }
+/*     */ 
+/*     */   private Float a6(Float v1, Float v2)
+/*     */   {
+/* 165 */     return Float.valueOf((float)Math.pow(v1.floatValue(), 1.0F / v2.floatValue()));
+/*     */   }
+/*     */ 
+/*     */   private Float a7(Float v1, Float v2)
+/*     */   {
+/* 170 */     return Float.valueOf((float)(Math.log(v1.floatValue()) / Math.log(v2.floatValue())));
+/*     */   }
+/*     */ 
+/*     */   private int getType(String str) {
+/* 174 */     if ((str.charAt(0) >= '0') && 
+/* 175 */       (str.charAt(0) <= '9')) {
+/* 176 */       return 1;
+/*     */     }
+/* 178 */     if (str.equals("e"))
+/* 179 */       return 1;
+/* 180 */     return 0;
+/*     */   }
+/*     */ 
+/*     */   private String partial(String str, String partialString) {
+/* 184 */     if (str.charAt(0) == ':') {
+/* 185 */       String[] opers = getOper(str);
+/* 186 */       if (opers == null) {
+/*     */         try {
+/* 188 */           throw new VCalculateException();
+/*     */         }
+/*     */         catch (VCalculateException e) {
+/* 191 */           e.printStackTrace();
+/*     */         }
+/*     */       }
+/* 194 */       if (opers.length == 3) {
+/* 195 */         String oper1 = opers[1];
+/* 196 */         String oper2 = opers[2];
+/* 197 */         if (opers[0].equals("+"))
+/* 198 */           return p1(oper1, partial(oper1, partialString), oper2, 
+/* 199 */             partial(oper2, partialString));
+/* 200 */         if (opers[0].equals("-"))
+/* 201 */           return p2(oper1, partial(oper1, partialString), oper2, 
+/* 202 */             partial(oper2, partialString));
+/* 203 */         if (opers[0].equals("*"))
+/* 204 */           return p3(oper1, partial(oper1, partialString), oper2, 
+/* 205 */             partial(oper2, partialString));
+/* 206 */         if (opers[0].equals("/"))
+/* 207 */           return p4(oper1, partial(oper1, partialString), oper2, 
+/* 208 */             partial(oper2, partialString));
+/* 209 */         if (opers[0].equals("^"))
+/* 210 */           return p5(oper1, partial(oper1, partialString), oper2, 
+/* 211 */             partial(oper2, partialString));
+/* 212 */         if (opers[0].equals("radical"))
+/* 213 */           return p6(oper1, partial(oper1, partialString), oper2, 
+/* 214 */             partial(oper2, partialString));
+/* 215 */         if (opers[0].equals("log"))
+/* 216 */           return p7(oper1, partial(oper1, partialString), oper2, 
+/* 217 */             partial(oper2, partialString));
+/*     */       }
+/*     */       else {
+/* 220 */         String[] partials = new String[opers.length - 1];
+/* 221 */         for (int i = 0; i < opers.length - 1; i++)
+/*     */         {
+/* 223 */           partials[i] = partial(opers[(i + 1)], partialString);
+/*     */         }
+/* 225 */         return new VMathUtil().getPartial(opers, partials);
+/*     */       }
+/*     */     } else {
+/* 227 */       if (getType(str) == 1) {
+/* 228 */         String hh = "";
+/* 229 */         hh = hh + str.charAt(0);
+/* 230 */         if (str.length() == 1)
+/* 231 */           return "0";
+/* 232 */         int index1 = 1;
+/* 233 */         while ((str.length() > index1) && (
+/* 234 */           ((str.charAt(index1) >= '0') && (str.charAt(index1) <= '9')) || 
+/* 235 */           (str
+/* 235 */           .charAt(index1) == '.'))) {
+/* 236 */           hh = hh + str.charAt(index1);
+/* 237 */           index1++;
+/*     */         }
+/* 239 */         return "0";
+/*     */       }
+/* 241 */       if ((partialString.equals(str)) && (!this.constValueMap.containsKey(str))) {
+/* 242 */         return "1";
+/*     */       }
+/* 244 */       return "0";
+/*     */     }
+/* 246 */     return null;
+/*     */   }
+/*     */ 
+/*     */   private String p7(String oper1, String partial, String oper2, String partial2)
+/*     */   {
+/* 253 */     return pp3(pp4("1", pp3(oper1, pp7(oper2, "e"))), partial);
+/*     */   }
+/*     */ 
+/*     */   private String pp7(String oper1, String oper2)
+/*     */   {
+/* 258 */     if (oper1.equals(oper2)) {
+/* 259 */       if (oper1.equals("e"))
+/* 260 */         return "1";
+/* 261 */       if (Float.parseFloat(oper2) <= 0.0F) {
+/*     */         try {
+/* 263 */           throw new Exception("log is not right const.");
+/*     */         }
+/*     */         catch (Exception e) {
+/* 266 */           e.printStackTrace();
+/*     */         }
+/*     */       }
+/* 269 */       return "1";
+/*     */     }
+/*     */ 
+/* 272 */     if (!oper2.equals("e"))
+/*     */     {
+/* 274 */       if ((getType(oper2) != 1) || (Float.parseFloat(oper2) <= 0.0F)) {
+/*     */         try {
+/* 276 */           throw new Exception("log is not right const.");
+/*     */         }
+/*     */         catch (Exception e) {
+/* 279 */           e.printStackTrace();
+/*     */         }
+/*     */       }
+/*     */ 
+/* 283 */       if (getType(oper1) == 1) {
+/* 284 */         if (oper1.equals("e"))
+/* 285 */           return ":log(" + oper1 + "," + oper2 + ")";
+/* 286 */         if (Float.parseFloat(oper2) <= 0.0F) {
+/*     */           try {
+/* 288 */             throw new Exception("log is not right const.");
+/*     */           }
+/*     */           catch (Exception e) {
+/* 291 */             e.printStackTrace();
+/*     */           }
+/*     */         }
+/* 294 */         return a7(Float.valueOf(Float.parseFloat(oper1)), Float.valueOf(Float.parseFloat(oper2)))+"";
+/*     */       }
+/*     */     }
+/*     */ 
+/* 298 */     return ":log(" + oper1 + "," + oper2 + ")";
+/*     */   }
+/*     */ 
+/*     */   private String p6(String oper1, String partial, String oper12, String partial2)
+/*     */   {
+/* 305 */     return pp3(
+/* 306 */       pp5("e", pp3(pp7(oper1, "e"), pp4("1", oper12))), 
+/* 307 */       pp1(pp3(partial, pp4(pp4("1", oper12), oper1)), 
+/* 308 */       pp3(pp3(pp7(oper1, "e"), partial2), 
+/* 309 */       pp2("0", pp4("1", pp3(oper12, oper12))))));
+/*     */   }
+/*     */ 
+/*     */   private String p5(String oper1, String partial, String oper12, String partial2)
+/*     */   {
+/* 316 */     return pp3(
+/* 317 */       pp5("e", pp3(pp7(oper1, "e"), oper12)), 
+/* 318 */       pp1(pp3(partial, pp4(oper12, oper1)), 
+/* 319 */       pp3(pp7(oper1, "e"), partial2)));
+/*     */   }
+/*     */ 
+/*     */   private String p4(String oper1, String partial, String oper12, String partial2)
+/*     */   {
+/* 326 */     return pp4(pp2(pp3(partial, oper12), pp3(partial2, oper1)), 
+/* 327 */       pp3(oper12, oper12));
+/*     */   }
+/*     */ 
+/*     */   private String p3(String oper1, String partial, String oper12, String partial2)
+/*     */   {
+/* 334 */     return pp1(pp3(oper1, partial2), pp3(oper12, partial));
+/*     */   }
+/*     */ 
+/*     */   private String p2(String oper1, String partial, String oper12, String partial2)
+/*     */   {
+/* 341 */     return pp2(partial, partial2);
+/*     */   }
+/*     */ 
+/*     */   private String p1(String oper1, String partial, String oper12, String partial2)
+/*     */   {
+/* 348 */     return pp1(partial, partial2);
+/*     */   }
+/*     */ 
+/*     */   private String pp1(String a, String b) {
+/* 352 */     if ((a.equals("0")) || (a.equals("0.0"))) {
+/* 353 */       return b;
+/*     */     }
+/* 355 */     if ((b.equals("0")) || (b.equals("0.0"))) {
+/* 356 */       return a;
+/*     */     }
+/* 358 */     if ((!a.equals("e")) && (!b.equals("e")) && (getType(a) == 1) && 
+/* 359 */       (getType(b) == 1)) {
+/* 360 */       return Float.parseFloat(a) + Float.parseFloat(b)+"";
+/*     */     }
+/* 362 */     return ":+(" + a + "," + b + ")";
+/*     */   }
+/*     */ 
+/*     */   private String pp2(String a, String b) {
+/* 366 */     if ((b.equals("0")) || (b.equals("0.0"))) {
+/* 367 */       return a;
+/*     */     }
+/* 369 */     if (a.equals(b)) {
+/* 370 */       return "0";
+/*     */     }
+/* 372 */     if ((!a.equals("e")) && (!b.equals("e")) && (getType(a) == 1) && 
+/* 373 */       (getType(b) == 1)) {
+/* 374 */       return Float.parseFloat(a) - Float.parseFloat(b)+"";
+/*     */     }
+/* 376 */     return ":-(" + a + "," + b + ")";
+/*     */   }
+/*     */ 
+/*     */   private String pp3(String a, String b) {
+/* 380 */     if ((a.equals("0")) || (a.equals("0.0")) || (b.equals("0")) || 
+/* 381 */       (b.equals("0.0"))) {
+/* 382 */       return "0";
+/*     */     }
+/* 384 */     if ((a.equals("1")) || (a.equals("1.0"))) {
+/* 385 */       return b;
+/*     */     }
+/* 387 */     if ((b.equals("1")) || (b.equals("1.0"))) {
+/* 388 */       return a;
+/*     */     }
+/*     */ 
+/* 393 */     if ((!a.equals("e")) && (!b.equals("e")) && (getType(a) == 1) && 
+/* 394 */       (getType(b) == 1)) {
+/* 395 */       return Float.parseFloat(a) * Float.parseFloat(b)+"";
+/*     */     }
+/* 397 */     return ":*(" + a + "," + b + ")";
+/*     */   }
+/*     */ 
+/*     */   private String pp5(String a, String b)
+/*     */   {
+/* 403 */     if ((a.equals("0")) || (a.equals("0.0"))) {
+/* 404 */       return "0";
+/*     */     }
+/* 406 */     if ((b.equals("0")) || (b.equals("0.0"))) {
+/* 407 */       return "1";
+/*     */     }
+/* 409 */     if ((b.equals("1")) || (b.equals("1.0"))) {
+/* 410 */       return a;
+/*     */     }
+/* 412 */     return ":^(" + a + "," + b + ")";
+/*     */   }
+/*     */ 
+/*     */   private String pp4(String a, String b) {
+/* 416 */     if ((a.equals("0")) || (a.equals("0.0"))) {
+/* 417 */       return "0";
+/*     */     }
+/* 419 */     if ((b.equals("0")) || (b.equals("0.0"))) {
+/*     */       try {
+/* 421 */         throw new Exception("/ Zero ");
+/*     */       }
+/*     */       catch (Exception e) {
+/* 424 */         e.printStackTrace();
+/*     */       }
+/*     */     }
+/* 427 */     if ((!a.equals("e")) && (!b.equals("e")) && (getType(a) == 1) && 
+/* 428 */       (getType(b) == 1)) {
+/* 429 */       return Float.parseFloat(a) / Float.parseFloat(b)+"";
+/*     */     }
+/* 431 */     return ":/(" + a + "," + b + ")";
+/*     */   }
+/*     */ 
+/*     */   private String[] getOper(String str) {
+/* 435 */     int length_ = str.length();
+/* 436 */     int retlen = 0;
+/* 437 */     int jjcount = 0;
+/* 438 */     for (int l = 0; l < length_; l++) {
+/* 439 */       if (str.charAt(l) == '(') {
+/* 440 */         jjcount++;
+/*     */       }
+/* 442 */       if (str.charAt(l) == ')') {
+/* 443 */         jjcount--;
+/*     */       }
+/* 445 */       if ((str.charAt(l) == ',') && (jjcount == 1))
+/* 446 */         retlen++;
+/*     */     }
+/* 448 */     String[] retval = new String[retlen + 2];
+/* 449 */     int retindex = 0;
+/* 450 */     if (str.charAt(0) == ':') {
+/* 451 */       String operString = ""; String v1 = ""; String v2 = "";
+/* 452 */       int index = 1;
+/* 453 */       while (str.charAt(index) != '(') {
+/* 454 */         operString = operString + str.charAt(index);
+/* 455 */         index++;
+/*     */       }
+/* 457 */       retval[(retindex++)] = operString;
+/* 458 */       index++;
+/* 459 */       int jcount = 0;
+/* 460 */       while (retlen > 0) {
+/* 461 */         v1 = "";
+/* 462 */         while ((str.charAt(index) != ',') || (jcount != 0)) {
+/* 463 */           if (str.charAt(index) == '(') {
+/* 464 */             jcount++;
+/*     */           }
+/* 466 */           if (str.charAt(index) == ')') {
+/* 467 */             jcount--;
+/*     */           }
+/* 469 */           v1 = v1 + str.charAt(index);
+/* 470 */           index++;
+/*     */         }
+/* 472 */         index++;
+/* 473 */         retval[(retindex++)] = v1;
+/*     */ 
+/* 475 */         retlen--;
+/*     */       }
+/* 477 */       while ((str.length() > index) && (
+/* 478 */         (str.charAt(index) != ')') || (jcount != 0))) {
+/* 479 */         if (str.charAt(index) == '(') {
+/* 480 */           jcount++;
+/*     */         }
+/* 482 */         if (str.charAt(index) == ')') {
+/* 483 */           jcount--;
+/*     */         }
+/* 485 */         v2 = v2 + str.charAt(index);
+/* 486 */         index++;
+/*     */       }
+/* 488 */       retval[(retindex++)] = v2;
+/* 489 */       return retval;
+/*     */     }
+/* 491 */     return null;
+/*     */   }
+/*     */ 
+/*     */   public static void main(String[] args)
+/*     */   {
+/* 500 */     VFunctor functor = new VFunctor();
+/* 501 */     functor.SetEquation(":+(:*(x,:cos(x)),:sin(x))");
+/* 502 */     VFunctor functor2 = functor.Partial("x1");
+/* 503 */     functor.Given("x", Float.valueOf(2.0F));
+/*     */ 
+/* 505 */     System.out.println(functor.Find());
+/*     */   }
+/*     */ 
+/*     */   public String toString()
+/*     */   {
+/* 510 */     return "VFunctor [Equation=" + this.Equation + "]";
+/*     */   }
+/*     */ }
+
+/* Location:           E:\EAMath.jar
+ * Qualified Name:     math.VFunctor
+ * JD-Core Version:    0.6.0
+ */
