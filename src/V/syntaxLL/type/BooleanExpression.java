@@ -5,8 +5,6 @@ package V.syntaxLL.type;
  * 						 <BaseType> BooleanOper <Expression>
  * 							or
  * 						<BooleanExpression> ||/&& <BooleanExpression>
- * 							or
- * 						( <BooleanExpression> )
  * @author Administrator
  *
  */

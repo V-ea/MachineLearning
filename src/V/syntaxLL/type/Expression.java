@@ -9,6 +9,8 @@ package V.syntaxLL.type;
  * 					 <BooleanExpression>
  * 					or
  * 					 <Assignment>
+ *					or
+ * 					( <Expression> )
  * @author Administrator
  *
  */
