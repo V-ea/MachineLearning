@@ -9,4 +9,10 @@ public class VFloat extends VObject {
 		float1.value=Float.parseFloat(data);
 		return float1;
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return ""+value;
+	}
 }

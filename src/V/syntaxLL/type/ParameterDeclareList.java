@@ -13,11 +13,9 @@ import V.runtime.env.VEnv;
  *
  */
 public class ParameterDeclareList extends VSyntaxBase {
-
 	@Override
 	public int Accept(VLexUnit[] units, int index,VEnv env) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }

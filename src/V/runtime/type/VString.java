@@ -9,4 +9,10 @@ public class VString extends VObject {
 		s1.value=data.substring(1, data.length()-1);
 		return s1;
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return value;
+	}
 }	

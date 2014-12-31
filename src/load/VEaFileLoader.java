@@ -7,14 +7,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import V.lex.VLex;
 import script.VShellScript;
-import script.lex.VLex;
+
 
 public class VEaFileLoader {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String ss="E:\\test.txt";
+		String ss="L:\\test.txt";
 //		if (args.length != 1) {
 //			System.out.println("Usage:VEaFileLoader [ea_file]");
 //			return;

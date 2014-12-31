@@ -51,11 +51,25 @@ public class VLex {
 			if(buff.data.trim()!="")
 			{
 				list.add(buff);
-				System.out.println(buff.toString());
+				//System.out.println(buff.toString());
 			}
 			buff=new VLexUnit();
 		}
-		return null;
+		for(int i1 = 0; i1 < list.size(); i1++)  
+        {  
+            if(list.get(i1).type==VLexUnit.SPACE)
+            {
+            	list.remove(i1);
+            	i1--;
+            }
+           
+            //System.out.println(list.get(i1));  
+        }
+		VLexUnit[] units=new VLexUnit[list.size()];
+		list.toArray(units);
+		for(int iii=0;iii<units.length;iii++)
+			System.out.println(units[iii]);
+		return units;
 	}
 
 	private int accept_other(String script, int i, VLexUnit buff) {
