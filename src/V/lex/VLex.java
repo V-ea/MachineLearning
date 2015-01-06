@@ -18,6 +18,8 @@ public class VLex {
 
 	}
 	private VTrainsitionDiagram vtdDiagram=new VTrainsitionDiagram();
+	private int line=0;
+	private int column;
 	/**
 	 * 接受词段并返回词单元信息
 	 * @throws Exception 
@@ -26,6 +28,7 @@ public class VLex {
 	public VLexUnit[] process(String script) throws Exception {
 		int len = script.length();
 		int i = 0;
+
 		LinkedList<VLexUnit> list=new LinkedList<VLexUnit>();
 		VLexUnit buff = new VLexUnit();
 		while (i < len) {
@@ -41,7 +44,7 @@ public class VLex {
 							if (buff.data.equals("")) {
 								i = accept_other(script, i, buff);
 								if (buff.data.equals("")) {
-									throw new Exception("unexpected char.["+script.charAt(i)+"]");
+									throw new Exception("unexpected char.["+script.charAt(i)+"] line:"+line +" column:"+column);
 								}
 							}
 						}
@@ -50,21 +53,18 @@ public class VLex {
 			}
 			if(buff.data.trim()!="")
 			{
-				list.add(buff);
+				if(!(buff.type==VLexUnit.SPACE))
+					list.add(buff);
+				if(buff.data.equals("\n")||buff.data.equals("\r"))
+				{
+					line++;
+					column=0;
+				}
 				//System.out.println(buff.toString());
 			}
 			buff=new VLexUnit();
 		}
-		for(int i1 = 0; i1 < list.size(); i1++)  
-        {  
-            if(list.get(i1).type==VLexUnit.SPACE)
-            {
-            	list.remove(i1);
-            	i1--;
-            }
-           
-            //System.out.println(list.get(i1));  
-        }
+		
 		VLexUnit[] units=new VLexUnit[list.size()];
 		list.toArray(units);
 		for(int iii=0;iii<units.length;iii++)
@@ -83,6 +83,9 @@ public class VLex {
 		else
 		{
 			int chartype=VCharType.at(ch);
+			buff.line = line;
+			buff.column=column;
+			column++;
 			switch (chartype) {
 			case VCharType.CHAR_o:
 				buff.type=VLexUnit.OPERATOR;
@@ -167,11 +170,11 @@ public class VLex {
 		int len=script.length();
 		int chartype=0;
 		int last_state=0;
-		
+		buff.line = line;
+		buff.column=column;
 		while(i<len)
 		{
 			int h=script.charAt(i);
-			
 			if(h<0||h>=128)
 			{
 				chartype=VCharType.CHAR_other;
@@ -181,7 +184,7 @@ public class VLex {
 				chartype=VCharType.at(h);
 				if(chartype==VCharType.CHAR_n)
 				{
-					throw new Exception("unknown char."+(int)h);
+					throw new Exception("unknown char.["+(char)chartype+"] line:"+line +" column:"+column);
 				}
 			}
 			//System.out.println(chartype);
@@ -195,6 +198,7 @@ public class VLex {
 			{
 				buff.data+=script.charAt(i);
 				i++;
+				column++;
 				return i;
 			}
 			if(current_state==-3)
@@ -208,6 +212,7 @@ public class VLex {
 			last_state=current_state;
 			buff.data+=script.charAt(i);
 			i++;
+			column++;
 		}
 		//给一个白空格 不能得出-1 -4的 就是失败
 		chartype= vtdDiagram.getTransitionType(id, VCharType.CHAR_ws);
@@ -220,6 +225,7 @@ public class VLex {
 		{
 			buff.data+=script.charAt(i);
 			i++;
+			column++;
 			return i;
 		}
 		if(current_state==-3)
@@ -235,7 +241,7 @@ public class VLex {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			new VLex().process("if(x=4){print(0);}");
+			new VLex().process("if(x=4||x==0){print(0);}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

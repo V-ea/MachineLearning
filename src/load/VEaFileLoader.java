@@ -15,7 +15,7 @@ public class VEaFileLoader {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String ss="L:\\test.txt";
+		String ss="E:\\test.txt";
 //		if (args.length != 1) {
 //			System.out.println("Usage:VEaFileLoader [ea_file]");
 //			return;
@@ -28,7 +28,7 @@ public class VEaFileLoader {
 			String Txt = null;
 			try {
 				while (((Txt = bufferedReader.readLine()) != null)) {
-					string += Txt;
+					string += Txt+"\n";
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

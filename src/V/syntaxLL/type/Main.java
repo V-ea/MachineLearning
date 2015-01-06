@@ -62,7 +62,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		VSyntaxBase startNode=new SentencesBlock();
+		VSyntaxBase startNode=new Start();
 		VEnv env=new VEnv();
 		startNode.Accept(units, 0, env);
 		System.out.println(((VInt)env.getVariable("A")).value);
