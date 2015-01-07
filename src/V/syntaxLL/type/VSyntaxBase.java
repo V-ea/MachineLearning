@@ -52,10 +52,17 @@ public abstract class VSyntaxBase {
 			System.exit(-1);
 		}
 		if (units[index].type == type)
+		{
 			if(list!=null)
+			{
 				for(int i=0;i<list.length;i++)
 					if(units[index].data.equals(list[i]))
 						return index+1;
+			}
+			else {
+				return index+1;
+			}
+		}
 		throw new Exception("error:unmatched"+units[index]);
 	}
 	public static String[] keywords=null;

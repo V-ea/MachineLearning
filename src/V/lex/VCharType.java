@@ -5,7 +5,7 @@ public class VCharType {
 	public static final int CHAR_w=1;//a-zA-z_ - +
 	public static final int CHAR_zero=2;//0   +
 	public static final int CHAR_1_9=3;//1-9  +
-	public static final int CHAR_o=4;//²Ù×÷·û + - * / ^ 
+	public static final int CHAR_o=4;//²Ù×÷·û + - * / ^ %
 	public static final int CHAR_logic1=5;//Âß¼­ÔËËã·û & + 
 	public static final int CHAR_logic2=6;//Âß¼­ÔËËã·û | +
 	public static final int CHAR_logic3=7;//Âß¼­ÔËËã·û < > +
@@ -32,7 +32,7 @@ public class VCharType {
 			/*8*/CHAR_n,CHAR_ws,CHAR_ws2,CHAR_n,CHAR_n,CHAR_ws2,CHAR_n,CHAR_n,
 			/*16*/CHAR_n,CHAR_n,CHAR_n,CHAR_n,CHAR_n,CHAR_n,CHAR_n,CHAR_n,
 			/*24*/CHAR_n,CHAR_n,CHAR_n,CHAR_n,CHAR_n,CHAR_n,CHAR_n,CHAR_n,//4
-			/*32*/CHAR_ws,CHAR_no,CHAR_ls,CHAR_n,CHAR_n,CHAR_n,CHAR_logic1,CHAR_ld,
+			/*32*/CHAR_ws,CHAR_no,CHAR_ls,CHAR_n,CHAR_n,CHAR_o,CHAR_logic1,CHAR_ld,
 			/*40*/CHAR_lx,CHAR_rx,CHAR_o,CHAR_o,CHAR_comma,CHAR_o,CHAR_p,CHAR_o,
 			/*48*/CHAR_zero,CHAR_1_9,CHAR_1_9,CHAR_1_9,CHAR_1_9,CHAR_1_9,CHAR_1_9,CHAR_1_9,
 			/*56*/CHAR_1_9,CHAR_1_9,CHAR_mao,CHAR_ju,CHAR_logic3,CHAR_equal,CHAR_logic3,CHAR_n,//8

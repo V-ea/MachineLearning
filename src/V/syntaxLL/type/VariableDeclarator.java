@@ -23,7 +23,7 @@ public class VariableDeclarator extends VSyntaxBase {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return 0;
+		return UNMATCHED;
 	}
 
 }

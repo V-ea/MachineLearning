@@ -44,7 +44,11 @@ public class VLex {
 							if (buff.data.equals("")) {
 								i = accept_other(script, i, buff);
 								if (buff.data.equals("")) {
-									throw new Exception("unexpected char.["+script.charAt(i)+"] line:"+line +" column:"+column);
+									//throw new Exception("unexpected char.["+script.charAt(i)+"] line:"+line +" column:"+column);
+									buff.data+=script.charAt(i);
+									buff.type=VLexUnit.UNKNOWN;
+									i++;
+									//column++;
 								}
 							}
 						}
@@ -184,7 +188,7 @@ public class VLex {
 				chartype=VCharType.at(h);
 				if(chartype==VCharType.CHAR_n)
 				{
-					throw new Exception("unknown char.["+(char)chartype+"] line:"+line +" column:"+column);
+					return i;
 				}
 			}
 			//System.out.println(chartype);
@@ -241,7 +245,7 @@ public class VLex {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			new VLex().process("if(x=4||x==0){print(0);}");
+			new VLex().process("if(x!=4||x!=0){print(0);%~$¹þ¹þ}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

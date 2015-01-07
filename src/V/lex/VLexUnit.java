@@ -7,7 +7,7 @@ public class VLexUnit {
 	public static final int COLON=4;
 	public static final int SPACE=5;
 	/**
-	 * ²Ù×÷·û + - * / ^
+	 * ²Ù×÷·û + - * / ^ %
 	 */
 	public final static int OPERATOR = 6;
 	public final static int BOPER=7;
@@ -39,7 +39,7 @@ public class VLexUnit {
 	public final static int LEFTZ = 17;
 	public final static int RIGHTZ = 18;
 	public final static int COMMA = 19;
-	
+	public final static int UNKNOWN =20;
 	
 	public final static int IF_KEYWORD = 32767;
 	public final static int WHILE_KEYWORD = 32766;
