@@ -3,18 +3,18 @@ package V.syntaxLL.type;
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
 
-public class LocalVariableDeclarationStatement extends VSyntaxBase {
+public class Id extends VSyntaxBase {
 
 	@Override
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
 		try {
-			index = Want(VLexUnit.IDENTIFIER, new String[]{"var"}, index, env);
-			index = Want(new VariableDeclarators(), index, env);
+			index = Want(VLexUnit.IDENTIFIER, null, index, env);
+			if(-1!=isKeyword(units[index-1]))
+				return VSyntaxBase.UNMATCHED;
 			return index;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO: handle exception
 		}
 		return VSyntaxBase.UNMATCHED;
 	}

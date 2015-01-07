@@ -15,7 +15,6 @@ public class Start extends VSyntaxBase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.exit(-1);
 		return -1;
 	}
 

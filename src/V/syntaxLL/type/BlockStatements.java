@@ -8,19 +8,27 @@ public class BlockStatements extends VSyntaxBase {
 	@Override
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
+		int index_old = index;
 		try {
-			index = Want(new BlockStatement(), index, env);
+			index = Want(new BlockStatement(), index_old, env);
 		} catch (Exception e) {//NULL
 			// TODO: handle exception
-			return index;
+			
+		}
+		if(index==-1)// BlockStatements 为 <NULL> 或者BlockStatement出错
+		{
+			if(index_old>=units.length)//Start 调用
+				return index_old;
+			if(units[index_old].data.equals("}")) //Block 调用
+				return index_old;
 		}
 		try {
-			index =Want(new BlockStatements(), index, env);
+			return Want(new BlockStatements(), index, env);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
-		return index;
+		return VSyntaxBase.UNMATCHED;
 	}
 
 }

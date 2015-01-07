@@ -3,7 +3,7 @@ package V.syntaxLL.type;
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
 
-public class BlockStatement extends VSyntaxBase {
+public class BlockStatement extends VSyntaxBase {//未匹配成功就意味着BlockStatements为空
 
 	@Override
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
@@ -26,7 +26,8 @@ public class BlockStatement extends VSyntaxBase {
 				return Want(v, index, env);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				return VSyntaxBase.UNMATCHED;
 			}
 		}
 		v=new Statement();
@@ -36,7 +37,8 @@ public class BlockStatement extends VSyntaxBase {
 				return Want(v, index, env);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				return VSyntaxBase.UNMATCHED;
 			}
 		}
 		v=new MethodDeclaration();
@@ -46,12 +48,12 @@ public class BlockStatement extends VSyntaxBase {
 				return Want(v, index, env);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				return VSyntaxBase.UNMATCHED;
 			}
 		}
-		System.out.println("unknown error."+units[index]);
-		System.exit(-1);
-		return 0;
+		//System.out.println("unknown BlockStateMent.");
+		return VSyntaxBase.UNMATCHED;//跳过
 	}
 
 }
