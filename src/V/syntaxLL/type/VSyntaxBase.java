@@ -10,23 +10,23 @@ public abstract class VSyntaxBase {
 	public VObject result=null;
 	protected VLexUnit[] firstSet=null;
 	public abstract int Accept(VLexUnit[] units,int index,VEnv env); 
-	public boolean First(VLexUnit unit)
-	{
-		if(firstSet==null)//doesn't matter
-			return true;
-		for(int i=0;i<firstSet.length;i++)
-			if(unit.type==firstSet[i].type)
-			{
-				if (firstSet[i].data.equals("")) {
-					return true;
-				}
-				else {
-					if(unit.data.equals(firstSet[i].data))
-						return true;
-				}
-			}
-		return false;
-	}
+//	public boolean First(VLexUnit unit)
+//	{
+//		if(firstSet==null)//doesn't matter
+//			return true;
+//		for(int i=0;i<firstSet.length;i++)
+//			if(unit.type==firstSet[i].type)
+//			{
+//				if (firstSet[i].data.equals("")) {
+//					return true;
+//				}
+//				else {
+//					if(unit.data.equals(firstSet[i].data))
+//						return true;
+//				}
+//			}
+//		return false;
+//	}
 	public static int Want(VSyntaxBase vsb,int index,VEnv env) throws Exception
 	{
 		if(index>=units.length)

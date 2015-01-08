@@ -1,5 +1,7 @@
 package V.syntaxLL.type;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
 
@@ -12,7 +14,8 @@ public class AssignmentExpression extends VSyntaxBase {
 			VSyntaxBase v=new Assignment();
 			VSyntaxBase v2=new Id();
 			VSyntaxBase v3 =new AssignOper();
-			if(v2.First(units[index])&&v3.First(units[index+1]))
+			if(units[index].type ==VLexUnit.IDENTIFIER
+					&&(units[index].type==VLexUnit.EQUAL||units[index].type==VLexUnit.OPERATOR))
 			{
 				return Want(v, index, env);
 			}

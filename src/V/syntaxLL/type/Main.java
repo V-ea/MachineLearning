@@ -21,7 +21,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//Èç¹û
-		String ss="L:\\test.txt";
+		String ss="E:\\test.txt";
 //		if (args.length != 1) {
 //			System.out.println("Usage:VEaFileLoader [ea_file]");
 //			return;
@@ -65,7 +65,7 @@ public class Main {
 		VSyntaxBase startNode=new Start();
 		VEnv env=new VEnv();
 		startNode.Accept(units, 0, env);
-		System.out.println(((VInt)env.getVariable("A")).value);
+		//System.out.println(((VInt)env.getVariable("")).value);
 		
 	}
 

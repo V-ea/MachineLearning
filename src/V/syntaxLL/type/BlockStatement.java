@@ -10,7 +10,7 @@ public class BlockStatement extends VSyntaxBase {//未匹配成功就意味着BlockStatem
 		// TODO Auto-generated method stub
 		VSyntaxBase v=new LocalVariableDeclarationStatement();
 		
-		if(v.First(units[index]))
+		if(units[index].data.equals("var"))
 		{
 			try {
 				return Want(v, index, env);
@@ -19,40 +19,29 @@ public class BlockStatement extends VSyntaxBase {//未匹配成功就意味着BlockStatem
 				e.printStackTrace();
 			}
 		}
-		v=new Statement();
-		if(v.First(units[index]))
-		{
-			try {
-				return Want(v, index, env);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				return VSyntaxBase.UNMATCHED;
-			}
-		}
-		v=new Statement();
-		if(v.First(units[index]))
-		{
-			try {
-				return Want(v, index, env);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				return VSyntaxBase.UNMATCHED;
-			}
-		}
+//		v=new Statement();
+//		if(v.First(units[index]))
+//		{
+//			try {
+//				return Want(v, index, env);
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				//e.printStackTrace();
+//				return VSyntaxBase.UNMATCHED;
+//			}
+	//	}
 		v=new MethodDeclaration();
-		if(v.First(units[index]))
+		if(units[index].data.equals("function"))
 		{
 			try {
 				return Want(v, index, env);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				//e.printStackTrace();
+				e.printStackTrace();
 				return VSyntaxBase.UNMATCHED;
 			}
 		}
-		//System.out.println("unknown BlockStateMent.");
+		System.out.println("unknown BlockStateMent.");
 		return VSyntaxBase.UNMATCHED;//跳过
 	}
 

@@ -3,20 +3,23 @@ package V.syntaxLL.type;
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
 
-public class Start extends VSyntaxBase {
+public class MethodBody extends VSyntaxBase {
 
 	@Override
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
-		VSyntaxBase.units =units;
-		try {
-			return Want(new BlockStatements(), index, env);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.exit(0);
+		if(units[index].type==VLexUnit.END)
+		{
+			return index+1;
 		}
-		return -1;
+		try {
+			index =Want(new Block(), index, env);
+			return index;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return UNMATCHED;
 	}
 
 }

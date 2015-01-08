@@ -3,21 +3,25 @@ package V.syntaxLL.type;
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
 
-public class VariableDeclarator extends VSyntaxBase {
+public class Literal extends VSyntaxBase {
 
 	@Override
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
-		int io=0;
 		try {
-			index = Want(new VariableDeclaratorId(), index, env);
-			if(units[index].type!=VLexUnit.EQUAL)
+			if(units[index].type==VLexUnit.FLOAT)
 			{
-				return index;
+				if(-1==units[index].data.indexOf("."))
+				{
+					return index+1;
+				}
+				return index+1;
 			}
-			index++;
-			index = Want(new VInit(), index, env);
-			return index;
+			if(units[index].type==VLexUnit.STRING)
+			{
+				units[index].data.subSequence(1, units[index].data.length()-1);
+				return index+1;
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

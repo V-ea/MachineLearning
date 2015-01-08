@@ -41,10 +41,10 @@ public class VLexUnit {
 	public final static int COMMA = 19;
 	public final static int UNKNOWN =20;
 	
-	public final static int IF_KEYWORD = 32767;
-	public final static int WHILE_KEYWORD = 32766;
-	public final static int ELSE_KEYWORD = 32765;
-	
+//	public final static int IF_KEYWORD = 32767;
+//	public final static int WHILE_KEYWORD = 32766;
+//	public final static int ELSE_KEYWORD = 32765;
+//	
 	@Override
 	public String toString() {
 		return "VLexUnit [data=" + data + ", type=" + type + ", line=" + line
@@ -54,20 +54,20 @@ public class VLexUnit {
 	public int type;
 	public int line;
 	public int column;
-	public int isKeyword()
-	{
-		if(type==IDENTIFIER&&data.equals("if"))
-		{
-			return IF_KEYWORD;
-		}
-		if(type==IDENTIFIER&&data.equals("else"))
-		{
-			return ELSE_KEYWORD;
-		}
-		if(type==IDENTIFIER&&data.equals("while"))
-		{
-			return WHILE_KEYWORD;
-		}
-		return 0;
-	}
+//	public int isKeyword()
+//	{
+//		if(type==IDENTIFIER&&data.equals("if"))
+//		{
+//			return IF_KEYWORD;
+//		}
+//		if(type==IDENTIFIER&&data.equals("else"))
+//		{
+//			return ELSE_KEYWORD;
+//		}
+//		if(type==IDENTIFIER&&data.equals("while"))
+//		{
+//			return WHILE_KEYWORD;
+//		}
+//		return 0;
+//	}
 }
