@@ -12,9 +12,7 @@ public class AssignmentExpression extends VSyntaxBase {
 		// TODO Auto-generated method stub
 		try {
 			VSyntaxBase v=new Assignment();
-			VSyntaxBase v2=new Id();
-			VSyntaxBase v3 =new AssignOper();
-			if(units[index].type ==VLexUnit.IDENTIFIER
+			if((units[index].type==VLexUnit.IDENTIFIER&&isKeyword(units[index])==-1)
 					&&(units[index].type==VLexUnit.EQUAL||units[index].type==VLexUnit.OPERATOR))
 			{
 				return Want(v, index, env);

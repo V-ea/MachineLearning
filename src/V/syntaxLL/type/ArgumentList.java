@@ -11,6 +11,7 @@ public class ArgumentList extends VSyntaxBase {
 		try {
 			index =Want(new Expression(), index, env);
 			index =Want(new ArguL_prime(), index, env);
+			return index;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

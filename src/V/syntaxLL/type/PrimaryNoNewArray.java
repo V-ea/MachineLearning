@@ -17,7 +17,7 @@ public class PrimaryNoNewArray extends VSyntaxBase {
 				index = Want(VLexUnit.RIGHTX,null, index, env);
 				return index ;
 			}
-			if(units[index].type==VLexUnit.IDENTIFIER)
+			if(units[index].type==VLexUnit.IDENTIFIER&&isKeyword(units[index])==-1)
 			{
 				index =Want(new MethodInvocation(), index, env);
 				return index;

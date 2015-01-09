@@ -17,18 +17,20 @@ public class VariableDeclarators extends VSyntaxBase {
 		}
 		return VSyntaxBase.UNMATCHED;
 	}
-	class VDS_prime extends VSyntaxBase{
+
+	class VDS_prime extends VSyntaxBase {
 
 		@Override
 		public int Accept(VLexUnit[] units, int index, VEnv env) {
 			// TODO Auto-generated method stub
 			try {
+				
+				if (units[index].type == VLexUnit.COMMA) {
+					index=Want(VLexUnit.COMMA, null, index, env);
+				} else {
+					return index;
+				}
 				index = Want(new VariableDeclarator(), index, env);
-			} catch (Exception e) {
-				// TODO: handle exception
-				return index;
-			}
-			try {
 				index = Want(new VDS_prime(), index, env);
 				return index;
 			} catch (Exception e) {
@@ -36,8 +38,8 @@ public class VariableDeclarators extends VSyntaxBase {
 				e.printStackTrace();
 				return VSyntaxBase.UNMATCHED;
 			}
-			
+
 		}
-		
+
 	}
 }

@@ -61,6 +61,7 @@ public class ConditionalExpression extends VSyntaxBase {
 			try {
 				index = Want(new IOE(), index, env);
 				index =Want(new CAE_prime(), index, env);
+				return index;
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();

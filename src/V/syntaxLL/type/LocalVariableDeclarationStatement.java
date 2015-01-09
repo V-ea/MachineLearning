@@ -11,6 +11,7 @@ public class LocalVariableDeclarationStatement extends VSyntaxBase {
 		try {
 			index = Want(VLexUnit.IDENTIFIER, new String[]{"var"}, index, env);
 			index = Want(new VariableDeclarators(), index, env);
+			index = Want(VLexUnit.END,null, index, env);
 			return index;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
