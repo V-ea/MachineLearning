@@ -8,7 +8,7 @@ public class VTrainsitionDiagram {
 			{1,-3,-3,-3},
 			{1, 1, 1,-1}
 	};//2 was final state 
-	public final int  float_[][]=new int[][]{ //STATE 0 1 2  input CHAR_zero:0 CHAR_1_9,CHAR_p:1 CHAR_ws,CHAR_o,CHAR_logic1,CHAR_logic2,CHAR_logic3,CHAR_equal,CHAR_no,CHAR_ju:2 other 3 
+	public final int  float_[][]=new int[][]{ //STATE 0 1 2  input CHAR_zero:0 CHAR_1_9,CHAR_p:1 CHAR_ws,CHAR_o,CHAR_logic1,CHAR_logic2,CHAR_logic3,CHAR_equal,CHAR_no,CHAR_ju,CHAR_comma:2 other 3 
 			{ 1, 2,-3,-3,-3},
 			{-2,-2,3,-1,-2},
 			{ 2, 2,3,-1,-2},
@@ -67,6 +67,7 @@ public class VTrainsitionDiagram {
 		case VCharType.CHAR_rx:
 		case VCharType.CHAR_rz:
 		case VCharType.CHAR_rb:
+		case VCharType.CHAR_comma:
 			return 3;
 		default:
 			return 4;

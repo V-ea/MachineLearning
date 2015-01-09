@@ -58,14 +58,14 @@ public class UnaryExpression extends VSyntaxBase {
 		public int Accept(VLexUnit[] units, int index, VEnv env) {
 			// TODO Auto-generated method stub
 			try {
-				if(units[index].data.equals("+"))
+				if(units[index].data.equals("+")&&units[index+1].data.equals("+"))
 				{
 					index =Want(VLexUnit.OPERATOR, new String[]{"+"}, index, env);
 					index =Want(VLexUnit.OPERATOR, new String[]{"+"}, index, env);
 					index =Want(new UE_prime(), index, env);
 					return index;
 				}
-				if(units[index].data.equals("-"))
+				if(units[index].data.equals("-")&&units[index+1].data.equals("-"))
 				{
 					index =Want(VLexUnit.OPERATOR, new String[]{"-"}, index, env);
 					index =Want(VLexUnit.OPERATOR, new String[]{"-"}, index, env);
