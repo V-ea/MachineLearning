@@ -19,10 +19,10 @@ public class VEnv {
 	}
 
 	/**
-	 * 临时区域的变量列表 目前只接受VEasyFunctor、Float两种类型的值
+	 * 临时区域的变量列表 
 	 */
 	private Map<String, VObject> variableMap = new HashMap<String, VObject>();
-
+	public VParameterList parameterList=null;
 	/**
 	 * 
 	 * @return
@@ -38,25 +38,49 @@ public class VEnv {
 	public void setParentEnv(VEnv parentEnv) {
 		this.parentEnv = parentEnv;
 	}
-
+	public VObject getDirectlyVariable(String label)
+	{
+		if (variableMap.containsKey(label)) {
+			return variableMap.get(label);
+		}
+		return null;
+	}
+	public VObject getVar(String label) throws Exception {
+		VObject object = getVariable(label);
+		if(object==null)
+			throw new Exception(label +" is not defined ");
+		return object;
+	}
 	public VObject getVariable(String label) {
 		if (variableMap.containsKey(label)) {
 			return variableMap.get(label);
 		}
 		if (null == getParentEnv()) {
-			return null;
+			if(parameterList==null)//
+				return null;
+			else{
+				return parameterList.GetInInvocation(label);
+			}
 		}
-		return parentEnv.getVariable(label);
+		VObject object =parentEnv.getVariable(label);
+		if (null == object) {
+			if(parameterList==null)//
+				return null;
+			else{
+				return parameterList.GetInInvocation(label);
+			}
+		}
+		return object;
 	}
 
-	public void SetVariable(String label, VObject value) {
+	public void AddVariable(String label, VObject value) {
 		this.variableMap.put(label, value);
 	}
 
 	public boolean ChangeVariable(String label, VObject value) {
 		// VEnv vEnv=this;
 		if (variableMap.containsKey(label)) {
-			SetVariable(label, value);
+			AddVariable(label, value);
 			return true;
 		}
 		if (null == getParentEnv()) {
@@ -68,9 +92,4 @@ public class VEnv {
 	public void RemoveVariable(String label) {
 		this.variableMap.remove(label);
 	}
-
-	public Float Calc(String label, int deeps) throws Exception {
-			return null;
-	}
-
 }

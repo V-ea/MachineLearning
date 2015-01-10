@@ -1,10 +1,13 @@
 package V.syntaxLL.type;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
-
+/**
+ * 
+ * @author Vea -  Eapchen专用标签 - 代码修改请保留该选项
+ * 有什么问题请向 cheneap@hotmail.com 反馈
+ *
+ */
 public class UnaryExpression extends VSyntaxBase {
 
 	@Override
@@ -29,7 +32,8 @@ public class UnaryExpression extends VSyntaxBase {
 				if(units[index].data.equals("(") //(<Expression>)
 						||units[index].type==VLexUnit.FLOAT
 						||units[index].type==VLexUnit.STRING //<Literal>
-						||(units[index].type==VLexUnit.IDENTIFIER&&-1==isKeyword(units[index])&&units[index+1].data.equals("(")))
+						||(units[index].type==VLexUnit.IDENTIFIER&&-1==isKeyword(units[index])&&units[index+1].data.equals("("))
+						||(units[index].type==VLexUnit.IDENTIFIER&&-1!=isKeyword(units[index])&&(units[index].data.equals("true")||units[index].data.equals("false"))))
 					//<MethodInvocation>
 				{
 					index =Want(new Primary(), index, env);

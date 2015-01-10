@@ -245,7 +245,7 @@ public class VLex {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			new VLex().process("if(x!=4||x!=0),{print(0);%~$込込}");
+			new VLex().process("if(x!=4||x^=0),{print(0);%~$込込}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

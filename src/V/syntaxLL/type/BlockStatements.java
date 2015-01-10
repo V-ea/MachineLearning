@@ -2,7 +2,13 @@ package V.syntaxLL.type;
 
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
-
+import V.runtime.type.VObject;
+/**
+ * 
+ * @author Vea -  Eapchen专用标签 - 代码修改请保留该选项
+ * 有什么问题请向 cheneap@hotmail.com 反馈
+ *
+ */
 public class BlockStatements extends VSyntaxBase {
 
 	@Override
@@ -11,20 +17,43 @@ public class BlockStatements extends VSyntaxBase {
 		int index_old = index;
 		if(index_old>=units.length-1)//Start 调用
 		{
-			System.exit(0);
 			return index_old+1;
 		}
 		if(units[index_old].data.equals("}")) //Block 调用
 			return index_old;
 		try {
 			index = Want(new BlockStatement(), index_old, env);
+			if(env.getDirectlyVariable("0")!=null)
+			{
+				this.result = env.getDirectlyVariable("0");
+				int balance = 0;
+				for(int i=index;i<units.length;i++)//return 就跳过
+				{
+					if(units[i].type==VLexUnit.RIGHTB)
+					{
+						balance--;
+					}
+					if(units[i].type==VLexUnit.LEFTB)
+					{
+						balance++;
+					}
+					if(balance==-1)
+					{
+						return i;
+					}
+				}
+				return units.length;
+			}
 		} catch (Exception e) {//NULL
 			// TODO: handle exception
 			System.out.println("basic block statement error at "+units[index_old]);
 			System.exit(0);
 		}
 		try {
-			return Want(new BlockStatements(), index, env);
+			VSyntaxBase v=null;
+			index = Want(v=new BlockStatements(), index, env);
+			this.result = v.result;
+			return index;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

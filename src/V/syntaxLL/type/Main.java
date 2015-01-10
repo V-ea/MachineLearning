@@ -13,7 +13,12 @@ import V.lex.VLex;
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
 import V.runtime.type.VInt;
-
+/**
+ * 
+ * @author Vea -  Eapchen专用标签 - 代码修改请保留该选项
+ * 有什么问题请向 cheneap@hotmail.com 反馈
+ *
+ */
 public class Main {
 	/**
 	 * 
@@ -65,7 +70,7 @@ public class Main {
 		VSyntaxBase startNode=new Start();
 		VEnv env=new VEnv();
 		startNode.Accept(units, 0, env);
-		//System.out.println(((VInt)env.getVariable("")).value);
+		System.out.println("["+((VInt)env.getVariable("a")).value+"]");
 		
 	}
 

@@ -2,13 +2,25 @@ package V.syntaxLL.type;
 
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
+import V.runtime.type.VFloat;
 import V.runtime.type.VObject;
-
+/**
+ * 
+ * @author Vea -  Eapchen专用标签 - 代码修改请保留该选项
+ * 有什么问题请向 cheneap@hotmail.com 反馈
+ *
+ */
 public abstract class VSyntaxBase {
 	public static VLexUnit[] units=null;
 	public static final int UNMATCHED = -1;
 	public VObject result=null;
 	protected VLexUnit[] firstSet=null;
+	public VSyntaxBase()
+	{
+		VFloat result_ = new VFloat();
+		result_.value = 0.0f;
+		result =result_;
+	}
 	public abstract int Accept(VLexUnit[] units,int index,VEnv env); 
 //	public boolean First(VLexUnit unit)
 //	{
@@ -67,7 +79,7 @@ public abstract class VSyntaxBase {
 	}
 	public static String[] keywords=null;
 	static{
-		keywords=new String[]{"if","var","function","else","while","for"};
+		keywords=new String[]{"if","var","function","else","while","for","true","false"};
 	}
 	public static int isKeyword(VLexUnit unit)
 	{

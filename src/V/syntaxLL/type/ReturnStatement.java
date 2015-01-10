@@ -8,17 +8,20 @@ import V.runtime.env.VEnv;
  * 有什么问题请向 cheneap@hotmail.com 反馈
  *
  */
-public class MethodBody extends VSyntaxBase {
+public class ReturnStatement extends VSyntaxBase {
 
 	@Override
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
-		if(units[index].type==VLexUnit.END)
-		{
-			return index+1;
-		}
 		try {
-			index =Want(new Block(), index, env);
+			index =Want(VLexUnit.IDENTIFIER, new String[]{"return"}, index, env);
+			if(units[index].type!=VLexUnit.END)
+			{
+				VSyntaxBase vSyntaxBase=null;
+				index =Want(vSyntaxBase=new Expression(), index, env);
+				env.AddVariable("0", vSyntaxBase.result);// 0  代表返回值
+			}
+			index =Want(VLexUnit.END, null, index, env);                                               
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception
