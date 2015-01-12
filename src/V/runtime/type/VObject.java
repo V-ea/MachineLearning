@@ -32,7 +32,7 @@ public abstract class VObject {
 			vInt2.value*=vInt.value;
 			return  vInt;
 		}
-		throw new Exception("unexcepted VObject.");
+		throw new Exception("multi:unexcepted VObject.");
 	}
 	public static VObject plus(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -71,7 +71,7 @@ public abstract class VObject {
 			vString.value = aString;
 			return vString;
 		}
-		throw new Exception("unexcepted VObject.");
+		throw new Exception("plus:unexcepted VObject.");
 	}
 	public static VObject minus(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -103,7 +103,7 @@ public abstract class VObject {
 			vInt.value-=vInt2.value;
 			return  vInt;
 		}
-		throw new Exception("unexcepted VObject.");
+		throw new Exception("minus:unexcepted VObject.");
 	}
 	public static VObject divide(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -135,7 +135,7 @@ public abstract class VObject {
 			vInt2.value/=vInt.value;
 			return  vInt;
 		}
-		throw new Exception("unexcepted VObject.");
+		throw new Exception("divide:unexcepted VObject.");
 	}
 	public static VObject mod(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -167,7 +167,7 @@ public abstract class VObject {
 			vInt2.value%=vInt.value;
 			return  vInt;
 		}
-		throw new Exception("unexcepted VObject.");
+		throw new Exception("mod:unexcepted VObject.");
 	}
 	public static VObject exp(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -187,6 +187,38 @@ public abstract class VObject {
 			
 			return  vFloat;
 		}
-		throw new Exception("unexcepted VObject.");
+		throw new Exception("exp:unexcepted VObject.");
+	}
+	public static int compare(VObject result2, VObject reObject) throws Exception {
+		// TODO Auto-generated method stub
+		if(result2 instanceof VFloat&&reObject instanceof VFloat)
+		{
+			VFloat vFloat=(VFloat)reObject;
+			VFloat vFloat2=(VFloat)result2;
+			if(vFloat2.value>vFloat.value)
+				return 1;
+			else if(vFloat2.value==vFloat.value)
+				return 0;
+			return  -1;
+		}
+		if(result2 instanceof VInt&&reObject instanceof VInt)
+		{
+			VInt vFloat=(VInt)reObject;
+			VInt vFloat2=(VInt)result2;
+			if(vFloat2.value>vFloat.value)
+				return 1;
+			else if(vFloat2.value==vFloat.value)
+				return 0;
+			return  -1;
+		}
+		if(result2 instanceof VBoolean&&reObject instanceof VBoolean)
+		{
+			VBoolean vFloat=(VBoolean)reObject;
+			VBoolean vFloat2=(VBoolean)result2;
+			if(vFloat2.value==vFloat.value)
+				return 0;
+			return  -1;
+		}
+		throw new Exception("compare VObject.need type.(int,int),(float,float),(boolean,boolean).");
 	}
 }

@@ -33,8 +33,9 @@ public class Assignment extends VSyntaxBase {
 					System.out.println(object);
 					if(string.value.equals("+="))
 					{
+						System.out.println("+= invoked");
 						env.ChangeVariable(((VString)v.result).value, 
-								VObject.plus(v2.result, object));
+								VObject.plus(object,v2.result));
 					}else
 					if(string.value.equals("-="))
 					{

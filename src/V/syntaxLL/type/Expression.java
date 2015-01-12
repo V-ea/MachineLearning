@@ -14,7 +14,10 @@ public class Expression extends VSyntaxBase {
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
 		try {
-			return Want(new AssignmentExpression(), index, env);
+			VSyntaxBase v=null;
+			index = Want(v=new AssignmentExpression(), index, env);
+			this.result =v.result;
+			return index;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

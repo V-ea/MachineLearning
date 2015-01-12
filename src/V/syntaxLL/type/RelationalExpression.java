@@ -2,6 +2,8 @@ package V.syntaxLL.type;
 
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
+import V.runtime.type.VBoolean;
+import V.runtime.type.VObject;
 /**
  * 
  * @author Vea -  Eapchen专用标签 - 代码修改请保留该选项
@@ -14,8 +16,14 @@ public class RelationalExpression extends VSyntaxBase {
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
 		try {
-			index =Want(new ShiftExpression(), index, env);
-			index =Want(new RE_prime(), index, env);
+			VSyntaxBase v=null;
+			VObject object=null;
+			index =Want(v=new ShiftExpression(), index, env);
+			object=v.result;
+			v=new RE_prime();
+			v.result=object;
+			index =Want(v, index, env);
+			this.result = v.result;
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -31,9 +39,25 @@ public class RelationalExpression extends VSyntaxBase {
 			try {
 				if(units[index].type==VLexUnit.BOPER&&(!units[index].data.equals("||"))&&(!units[index].data.equals("&&")))
 				{
+					VSyntaxBase v=null;
+					String operString= units[index].data;
 					index =Want(VLexUnit.BOPER, new String[]{">=","<=",">","<"},index, env);
-					index =Want(new ShiftExpression(), index, env);
-					index =Want(new RE_prime(), index, env);
+					index =Want(v=new ShiftExpression(), index, env);
+					VObject aObject=this.result;
+					VObject bObject=v.result;
+					VBoolean reObject=new VBoolean();
+					reObject.value=false;
+					int i=VObject.compare(aObject, bObject);
+					if((i>0||i==0)&&operString.equals(">="))
+						reObject.value=true;
+					else if(i>0&&operString.equals(">"))
+						reObject.value=true;
+					else if((i<0||i==0)&&operString.equals("<="))
+						reObject.value=true;
+					else if(i<0&&operString.equals("<"))
+						reObject.value=true;
+					this.result = reObject;
+					//index =Want(new RE_prime(), index, env);
 					return index;
 				}
 				return index;

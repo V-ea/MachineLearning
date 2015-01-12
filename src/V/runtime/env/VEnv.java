@@ -7,6 +7,13 @@ import V.runtime.type.VObject;
 
 
 public class VEnv {
+	@Override
+	public String toString() {
+		return "VEnv [parentEnv=" + parentEnv + ", Deepth=" + Deepth
+				+ ", variableMap=" + variableMap + ", parameterList="
+				+ parameterList + "]";
+	}
+
 	private VEnv parentEnv = null;
 	private int Deepth = 0;
 
@@ -40,6 +47,7 @@ public class VEnv {
 	}
 	public VObject getDirectlyVariable(String label)
 	{
+		System.out.println(this);
 		if (variableMap.containsKey(label)) {
 			return variableMap.get(label);
 		}
@@ -47,6 +55,7 @@ public class VEnv {
 	}
 	public VObject getVar(String label) throws Exception {
 		VObject object = getVariable(label);
+		System.out.println(this);
 		if(object==null)
 			throw new Exception(label +" is not defined ");
 		return object;

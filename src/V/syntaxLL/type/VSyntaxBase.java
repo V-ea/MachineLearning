@@ -17,9 +17,7 @@ public abstract class VSyntaxBase {
 	protected VLexUnit[] firstSet=null;
 	public VSyntaxBase()
 	{
-		VFloat result_ = new VFloat();
-		result_.value = 0.0f;
-		result =result_;
+		result =null;
 	}
 	public abstract int Accept(VLexUnit[] units,int index,VEnv env); 
 //	public boolean First(VLexUnit unit)

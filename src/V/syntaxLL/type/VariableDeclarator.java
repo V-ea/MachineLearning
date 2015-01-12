@@ -22,7 +22,6 @@ public class VariableDeclarator extends VSyntaxBase {
 			String label=((VString)v.result).value;
 			if(units[index].type!=VLexUnit.EQUAL)
 			{
-				
 				return index;
 			}
 			index++;
