@@ -21,12 +21,14 @@ public class AssignmentExpression extends VSyntaxBase {
 					&&(units[index].type==VLexUnit.EQUAL||units[index].type==VLexUnit.OPERATOR))
 			{
 				index =Want(v, index, env);
-				this.result =v.result;
+				if(calcEnable)
+					this.result =v.result;
 				return index;
 			}
 			else {
 				index = Want(v=new ConditionalExpression(), index, env);
-				this.result =v.result;
+				if(calcEnable)
+					this.result =v.result;
 				return index;
 			}
 		} catch (Exception e) {

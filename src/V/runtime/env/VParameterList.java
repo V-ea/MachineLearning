@@ -9,6 +9,11 @@ import V.runtime.type.VObject;
 public class VParameterList {
 	private List<String> list=new ArrayList<String>();
 	private Map<String, VObject> value=new HashMap<String, VObject>();
+	@Override
+	public String toString() {
+		return "VParameterList [list=" + list + ", value=" + value + ", count="
+				+ count + ", nextParaIndex=" + nextParaIndex + "]";
+	}
 	private int count=0;//parameter count
 	private int nextParaIndex=0;
 	public void Clear()// for next invocation

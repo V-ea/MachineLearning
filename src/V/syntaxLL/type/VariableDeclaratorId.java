@@ -17,7 +17,8 @@ public class VariableDeclaratorId extends VSyntaxBase {
 		try {
 			VSyntaxBase v=null;
 			index = Want(v=new Id(), index, env);
-			this.result = v.result;
+			if (calcEnable)
+				this.result = v.result;
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

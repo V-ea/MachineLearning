@@ -1,5 +1,6 @@
 package V.syntaxLL.type;
 
+import sun.security.krb5.internal.EncAPRepPart;
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
 /**
@@ -16,7 +17,10 @@ public class StatementWithoutSubStatement extends VSyntaxBase {
 		try {
 			if(units[index].type==VLexUnit.LEFTB)
 			{
-				index= Want(new Block(), index, env);
+			
+				VEnv env2=new VEnv();
+				env2.setParentEnv(env);
+				index= Want(new Block(), index, env2);
 				return index;
 			}
 			if(units[index].type==VLexUnit.END)

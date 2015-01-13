@@ -16,7 +16,8 @@ public class Expression extends VSyntaxBase {
 		try {
 			VSyntaxBase v=null;
 			index = Want(v=new AssignmentExpression(), index, env);
-			this.result =v.result;
+			if(calcEnable)
+				this.result =v.result;
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

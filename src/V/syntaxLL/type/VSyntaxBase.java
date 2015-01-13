@@ -12,6 +12,7 @@ import V.runtime.type.VObject;
  */
 public abstract class VSyntaxBase {
 	public static VLexUnit[] units=null;
+	public static boolean calcEnable=true;
 	public static final int UNMATCHED = -1;
 	public VObject result=null;
 	protected VLexUnit[] firstSet=null;

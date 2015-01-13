@@ -10,7 +10,7 @@ import V.runtime.type.VObject;
  *
  */
 public class BlockStatements extends VSyntaxBase {
-
+	
 	@Override
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
@@ -23,30 +23,18 @@ public class BlockStatements extends VSyntaxBase {
 			return index_old;
 		try {
 			index = Want(new BlockStatement(), index_old, env);
+			if(calcEnable==true)
+			{
 			if(env.getDirectlyVariable("0")!=null)
 			{
 				this.result = env.getDirectlyVariable("0");
-				int balance = 0;
-				for(int i=index;i<units.length;i++)//return ¾ÍÌø¹ý
-				{
-					if(units[i].type==VLexUnit.RIGHTB)
-					{
-						balance--;
-					}
-					if(units[i].type==VLexUnit.LEFTB)
-					{
-						balance++;
-					}
-					if(balance==-1)
-					{
-						return i;
-					}
-				}
-				return units.length;
+				return index;
+			}
 			}
 		} catch (Exception e) {//NULL
 			// TODO: handle exception
 			System.out.println("basic block statement error at "+units[index_old]);
+			e.printStackTrace();
 			System.exit(0);
 		}
 		try {

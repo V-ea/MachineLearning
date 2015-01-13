@@ -18,6 +18,8 @@ public class MethodBody extends VSyntaxBase {
 			return index+1;
 		}
 		try {
+			//VEnv env2=new VEnv();
+			//env2.setParentEnv(env);
 			index =Want(new Block(), index, env);
 			return index;
 		} catch (Exception e) {

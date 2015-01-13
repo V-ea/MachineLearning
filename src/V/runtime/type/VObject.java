@@ -2,6 +2,22 @@ package V.runtime.type;
 
 public abstract class VObject {
 	public abstract String toString();
+	private static String printType(VObject result)
+	{
+		if(result instanceof VFloat)
+			return ("float");
+		else if(result instanceof VInt)
+			return("int");
+		else if(result instanceof VBoolean)
+			return("boolean");
+		else if(result instanceof VString)
+			return("string");
+		else if(result instanceof VFunction)
+			return("function");
+		else {
+			return("unknown/null");
+		}
+	}
 	public static VObject multi(VObject result2, VObject reObject) throws Exception
 	{
 		if(result2 instanceof VFloat&&reObject instanceof VFloat)
@@ -9,7 +25,7 @@ public abstract class VObject {
 			VFloat vFloat=(VFloat)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value*=vFloat.value;
-			return  vFloat;
+			return  vFloat2;
 		}
 		if(result2 instanceof VFloat&&reObject instanceof VInt)
 		{
@@ -22,7 +38,7 @@ public abstract class VObject {
 		{
 			VFloat vFloat=(VFloat)reObject;
 			VInt vFloat2=(VInt)result2;
-			vFloat2.value*=vFloat.value;
+			vFloat.value*=vFloat2.value;
 			return  vFloat;
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
@@ -30,9 +46,9 @@ public abstract class VObject {
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
 			vInt2.value*=vInt.value;
-			return  vInt;
+			return  vInt2;
 		}
-		throw new Exception("multi:unexcepted VObject.");
+		throw new Exception("multi:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
 	public static VObject plus(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -40,8 +56,8 @@ public abstract class VObject {
 		{
 			VFloat vFloat=(VFloat)reObject;
 			VFloat vFloat2=(VFloat)result2;
-			vFloat.value+=vFloat2.value;
-			return  vFloat;
+			vFloat2.value+=vFloat.value;
+			return  vFloat2;
 		}
 		if(result2 instanceof VFloat&&reObject instanceof VInt)
 		{
@@ -61,8 +77,8 @@ public abstract class VObject {
 		{
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
-			vInt.value+=vInt2.value;
-			return  vInt;
+			vInt2.value+=vInt.value;
+			return  vInt2;
 		}
 		if(result2 instanceof VString|| reObject instanceof VString)
 		{
@@ -80,7 +96,7 @@ public abstract class VObject {
 			VFloat vFloat=(VFloat)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value-=vFloat.value;
-			return  vFloat;
+			return  vFloat2;
 		}
 		if(result2 instanceof VFloat&&reObject instanceof VInt)
 		{
@@ -93,17 +109,18 @@ public abstract class VObject {
 		{
 			VFloat vFloat=(VFloat)reObject;
 			VInt vFloat2=(VInt)result2;
-			vFloat.value-=vFloat2.value;
-			return  vFloat;
+			VFloat vFloat3=new VFloat();
+			vFloat3.value=(float)vFloat2.value-vFloat.value;
+			return  vFloat3;
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
 		{
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
-			vInt.value-=vInt2.value;
-			return  vInt;
+			vInt2.value-=vInt.value;
+			return  vInt2;
 		}
-		throw new Exception("minus:unexcepted VObject.");
+		throw new Exception("minus:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
 	public static VObject divide(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -125,17 +142,18 @@ public abstract class VObject {
 		{
 			VFloat vFloat=(VFloat)reObject;
 			VInt vFloat2=(VInt)result2;
-			vFloat2.value/=vFloat.value;
-			return  vFloat;
+			VFloat vFloat3=new VFloat();
+			vFloat3.value=(float)vFloat2.value/vFloat.value;
+			return  vFloat3;
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
 		{
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
 			vInt2.value/=vInt.value;
-			return  vInt;
+			return  vInt2;
 		}
-		throw new Exception("divide:unexcepted VObject.");
+		throw new Exception("divide:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
 	public static VObject mod(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -144,7 +162,7 @@ public abstract class VObject {
 			VFloat vFloat=(VFloat)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value%=vFloat.value;
-			return  vFloat;
+			return  vFloat2;
 		}
 		if(result2 instanceof VFloat&&reObject instanceof VInt)
 		{
@@ -157,17 +175,19 @@ public abstract class VObject {
 		{
 			VFloat vFloat=(VFloat)reObject;
 			VInt vFloat2=(VInt)result2;
-			vFloat2.value%=vFloat.value;
-			return  vFloat;
+			VFloat vFloat3=new VFloat();
+			
+			vFloat3.value=((int)vFloat2.value)%vFloat.value;
+			return  vFloat3;
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
 		{
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
 			vInt2.value%=vInt.value;
-			return  vInt;
+			return  vInt2;
 		}
-		throw new Exception("mod:unexcepted VObject.");
+		throw new Exception("mod:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
 	public static VObject exp(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -187,7 +207,7 @@ public abstract class VObject {
 			
 			return  vFloat;
 		}
-		throw new Exception("exp:unexcepted VObject.");
+		throw new Exception("exp:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
 	public static int compare(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub
@@ -219,6 +239,6 @@ public abstract class VObject {
 				return 0;
 			return  -1;
 		}
-		throw new Exception("compare VObject.need type.(int,int),(float,float),(boolean,boolean).");
+		throw new Exception("compare VObject.need type.(int,int),(float,float),(boolean,boolean)."+printType(result2)+" vs "+printType(reObject));
 	}
 }

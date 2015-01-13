@@ -17,7 +17,8 @@ public class BreakStatement extends VSyntaxBase {
 		try {
 			index =Want(VLexUnit.IDENTIFIER, new String[]{"break"}, index, env);
 			index =Want(VLexUnit.END, null, index, env);
-			env.AddVariable("break", new VObject() {
+			if(calcEnable)
+				env.AddVariable("break", new VObject() {
 				
 				@Override
 				public String toString() {

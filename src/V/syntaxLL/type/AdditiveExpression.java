@@ -43,9 +43,18 @@ public class AdditiveExpression extends VSyntaxBase {
 					VSyntaxBase v1=new MultiplicativeExpression();
 					VSyntaxBase v2 =new AddE_prime();
 					index =Want(v1, index, env);
-					v2.result = VObject.plus(this.result,v1.result);
+					if(calcEnable)
+					{
+					if(operString.equals("+"))
+						v2.result = VObject.plus(this.result,v1.result);
+					else {
+						v2.result = VObject.minus(this.result,v1.result);
+					}}
 					index =Want(v2, index, env);
-					this.result =v2.result;
+					if(calcEnable)
+					{
+						this.result =v2.result;
+					}
 					return index;
 				}
 				return index;

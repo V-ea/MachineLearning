@@ -17,9 +17,10 @@ public class Block extends VSyntaxBase {
 			index =Want(VLexUnit.LEFTB, null, index, env);
 			if(units[index].type!=VLexUnit.RIGHTB)
 			{
-				VSyntaxBase v=null;
+				BlockStatements v=null;
 				index =Want(v=new BlockStatements(), index, env);
-				this.result = v.result;
+				if(calcEnable)
+					this.result = v.result;
 			}
 			index =Want(VLexUnit.RIGHTB, null, index, env);
 			return index;

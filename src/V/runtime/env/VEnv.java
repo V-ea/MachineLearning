@@ -3,6 +3,7 @@ package V.runtime.env;
 import java.util.HashMap;
 import java.util.Map;
 
+import V.runtime.type.VInt;
 import V.runtime.type.VObject;
 
 
@@ -98,7 +99,22 @@ public class VEnv {
 		return parentEnv.ChangeVariable(label, value);
 	}
 
-	public void RemoveVariable(String label) {
+	public void RemoveDirectlyVariable(String label) {
 		this.variableMap.remove(label);
+	}
+	public static void main(String[] args) throws Exception {
+		VEnv env=new VEnv();
+		VEnv env2=new VEnv();
+		VInt aInt=new VInt();
+		VInt bInt=new VInt();
+		bInt.value =90;
+		VParameterList parameterList=new VParameterList();
+		//parameterList.DeclareParameterInDeclaration("b");
+		parameterList.SetParameterInInvocation(bInt);
+		env2.parameterList=parameterList;
+		env.setParentEnv(env2);
+		aInt.value =1;
+		env.AddVariable("a", aInt);
+		System.out.println(env.getVar("a"));
 	}
 }

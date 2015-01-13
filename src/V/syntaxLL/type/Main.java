@@ -69,8 +69,9 @@ public class Main {
 		}
 		VSyntaxBase startNode=new Start();
 		VEnv env=new VEnv();
+		//VSyntaxBase.calcEnable=false;
 		startNode.Accept(units, 0, env);
-		System.out.println("["+((VInt)env.getVariable("a")).value+"]");
+		//System.out.println("["+((VInt)env.getVariable("a")).value+"]");
 		
 	}
 

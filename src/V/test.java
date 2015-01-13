@@ -1,11 +1,15 @@
 package V;
 
 public class test {
+	public static int get()
+	{
+		return 1;
+	}
 	public static void main(String[] args) {
 		//boolean a=1||1;
-		int a=0;
-		System.out.println(a++);
-		//System.out.println(1<1<3<6);
+		float a=0.8f;
+		//System.out.println(get()++);
+		//System.out.println(++(++a));
 	}
 
 }
