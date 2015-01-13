@@ -87,14 +87,14 @@ public class VEnv {
 		this.variableMap.put(label, value);
 	}
 
-	public boolean ChangeVariable(String label, VObject value) {
+	public boolean ChangeVariable(String label, VObject value) throws Exception {
 		// VEnv vEnv=this;
 		if (variableMap.containsKey(label)) {
 			AddVariable(label, value);
 			return true;
 		}
 		if (null == getParentEnv()) {
-			return false;
+			throw new Exception(label +" must be declared before use.");
 		}
 		return parentEnv.ChangeVariable(label, value);
 	}

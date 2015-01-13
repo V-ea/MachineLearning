@@ -14,7 +14,10 @@ public class FormalParameter extends VSyntaxBase {
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
 		try {
-			index =Want(new VariableDeclaratorId(), index, env);
+			VSyntaxBase v=null;
+			index =Want(v=new VariableDeclaratorId(), index, env);
+			if(calcEnable)
+				this.result =v.result;
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

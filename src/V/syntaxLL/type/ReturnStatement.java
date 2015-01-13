@@ -21,6 +21,7 @@ public class ReturnStatement extends VSyntaxBase {
 				index =Want(vSyntaxBase=new Expression(), index, env);
 				if (calcEnable)
 					env.AddVariable("0", vSyntaxBase.result);// 0  代表返回值
+				System.out.println("["+vSyntaxBase.result);
 			}
 			index =Want(VLexUnit.END, null, index, env);                                               
 			return index;

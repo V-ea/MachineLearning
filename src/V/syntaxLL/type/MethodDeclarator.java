@@ -20,7 +20,9 @@ public class MethodDeclarator extends VSyntaxBase {
 			String label=null;
 			index =Want(v=new Id(), index, env);
 			if(calcEnable)
+			{	
 				label=((VString)v.result).value;
+			}
 			index =Want(VLexUnit.LEFTX, null, index, env);
 			if(units[index].type!=VLexUnit.RIGHTX)
 			{
@@ -28,6 +30,7 @@ public class MethodDeclarator extends VSyntaxBase {
 				if(calcEnable)
 				{
 					function=(VFunction)v.result;
+					function.label=label;
 				}
 			}
 			index =Want(VLexUnit.RIGHTX, null, index, env);

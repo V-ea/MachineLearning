@@ -20,7 +20,9 @@ public class MethodBody extends VSyntaxBase {
 		try {
 			//VEnv env2=new VEnv();
 			//env2.setParentEnv(env);
+			calcEnable=false;
 			index =Want(new Block(), index, env);
+			calcEnable=true;
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -10,7 +10,7 @@ import V.syntaxLL.type.VSyntaxBase;
 
 public class VFunction extends VObject{
 	public VParameterList paraList=new VParameterList();
-	
+	public String label=null;
 	public int from =-1;
 	public VObject Invoke(VEnv env)
 	{
@@ -28,7 +28,7 @@ public class VFunction extends VObject{
 	}
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "VFunction [paraList=" + paraList + ", label=" + label
+				+ ", from=" + from + "]";
 	}
 }
