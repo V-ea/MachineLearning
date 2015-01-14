@@ -39,7 +39,7 @@ public class VCharType {
 			/*64*/CHAR_n,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,
 			/*72*/CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,
 			/*80*/CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,
-			/*88*/CHAR_w,CHAR_w,CHAR_w,CHAR_lz,CHAR_n,CHAR_rz,CHAR_o,CHAR_w,//12
+			/*88*/CHAR_w,CHAR_w,CHAR_w,CHAR_lz,CHAR_other,CHAR_rz,CHAR_o,CHAR_w,//12
 			/*96*/CHAR_n,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,
 			/*104*/CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,
 			/*112*/CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,CHAR_w,

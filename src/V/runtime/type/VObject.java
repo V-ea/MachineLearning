@@ -87,7 +87,7 @@ public abstract class VObject {
 			vString.value = aString;
 			return vString;
 		}
-		throw new Exception("plus:unexcepted VObject.");
+		throw new Exception("plus:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
 	public static VObject minus(VObject result2, VObject reObject) throws Exception {
 		// TODO Auto-generated method stub

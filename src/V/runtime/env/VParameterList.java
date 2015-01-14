@@ -7,15 +7,16 @@ import java.util.Map;
 import V.runtime.type.VObject;
 
 public class VParameterList {
-	private List<String> list=new ArrayList<String>();
-	private Map<String, VObject> value=new HashMap<String, VObject>();
-	@Override
-	public String toString() {
-		return "VParameterList [list=" + list + ", value=" + value + ", count="
-				+ count + ", nextParaIndex=" + nextParaIndex + "]";
-	}
 	private int count=0;//parameter count
 	private int nextParaIndex=0;
+	private List<String> list=new ArrayList<String>();
+	private Map<String, VObject> value=new HashMap<String, VObject>();
+	
+	@Override
+	public String toString() {
+		return "VParameterList [count=" + count + ", nextParaIndex="
+				+ nextParaIndex + ", list=" + list + ", value=" + value + "]";
+	}
 	public void Clear()// for next invocation
 	{
 		value.clear();
@@ -57,5 +58,12 @@ public class VParameterList {
 		}
 		list.add(string);
 		count ++;
+	}
+	public VParameterList Clone() {
+		// TODO Auto-generated method stub
+		VParameterList parameterList=new VParameterList();
+		parameterList.count=this.count;
+		parameterList.list=this.list;
+		return parameterList;
 	}
 }

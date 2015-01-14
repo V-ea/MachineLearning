@@ -29,7 +29,7 @@ public class MethodInvocation extends VSyntaxBase {
 							+ ((VString) v.result).value);
 				env2 = new VEnv();
 				env2.setParentEnv(env);
-				function = (VFunction) object_;
+				function = ((VFunction) object_).Clone();
 				env2.parameterList = function.paraList;
 			}
 			index = Want(VLexUnit.LEFTX, null, index, env);
@@ -37,6 +37,7 @@ public class MethodInvocation extends VSyntaxBase {
 				index = Want(new ArgumentList(), index, env2);// OPT
 			index = Want(VLexUnit.RIGHTX, null, index, env);
 			if (calcEnable) {
+				System.out.println("a:"+env2.getVar("a"));
 				this.result = function.Invoke(env2);
 				function.paraList.Clear();
 			}

@@ -16,7 +16,11 @@ public class ArgumentList extends VSyntaxBase {
 		try {
 			VSyntaxBase vSyntaxBase=null;
 			index =Want(vSyntaxBase=new Expression(), index, env);
-			env.parameterList.SetParameterInInvocation(vSyntaxBase.result);
+			if(calcEnable)
+			{
+				System.out.println("env"+env.parameterList);
+				env.parameterList.SetParameterInInvocation(vSyntaxBase.result);
+			}
 			index =Want(new ArguL_prime(), index, env);
 			return index;
 		} catch (Exception e) {

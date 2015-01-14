@@ -6,7 +6,6 @@ import java.util.Map;
 import V.runtime.type.VInt;
 import V.runtime.type.VObject;
 
-
 public class VEnv {
 	@Override
 	public String toString() {
@@ -27,10 +26,11 @@ public class VEnv {
 	}
 
 	/**
-	 * 临时区域的变量列表 
+	 * 临时区域的变量列表
 	 */
 	private Map<String, VObject> variableMap = new HashMap<String, VObject>();
-	public VParameterList parameterList=null;
+	public VParameterList parameterList = null;
+
 	/**
 	 * 
 	 * @return
@@ -46,41 +46,44 @@ public class VEnv {
 	public void setParentEnv(VEnv parentEnv) {
 		this.parentEnv = parentEnv;
 	}
-	public VObject getDirectlyVariable(String label)
-	{
+
+	public VObject getDirectlyVariable(String label) {
 		System.out.println(this);
 		if (variableMap.containsKey(label)) {
 			return variableMap.get(label);
 		}
 		return null;
 	}
+
 	public VObject getVar(String label) throws Exception {
 		VObject object = getVariable(label);
 		System.out.println(this);
-		if(object==null)
-			throw new Exception(label +" is not defined ");
+		if (object == null)
+			throw new Exception(label + " is not defined ");
 		return object;
 	}
+
 	public VObject getVariable(String label) {
 		if (variableMap.containsKey(label)) {
 			return variableMap.get(label);
 		}
 		if (null == getParentEnv()) {
-			if(parameterList==null)//
+			if (parameterList == null)//
 				return null;
-			else{
+			else {
 				return parameterList.GetInInvocation(label);
 			}
 		}
-		VObject object =parentEnv.getVariable(label);
-		if (null == object) {
-			if(parameterList==null)//
-				return null;
-			else{
-				return parameterList.GetInInvocation(label);
+		if (parameterList == null)//
+			return parentEnv.getVariable(label);
+		else {
+			VObject object = parameterList.GetInInvocation(label);
+			if (object == null) {
+				return parentEnv.getVariable(label);
 			}
+			return object;
 		}
-		return object;
+
 	}
 
 	public void AddVariable(String label, VObject value) {
@@ -94,7 +97,7 @@ public class VEnv {
 			return true;
 		}
 		if (null == getParentEnv()) {
-			throw new Exception(label +" must be declared before use.");
+			throw new Exception(label + " must be declared before use.");
 		}
 		return parentEnv.ChangeVariable(label, value);
 	}
@@ -102,19 +105,20 @@ public class VEnv {
 	public void RemoveDirectlyVariable(String label) {
 		this.variableMap.remove(label);
 	}
+
 	public static void main(String[] args) throws Exception {
-		VEnv env=new VEnv();
-		VEnv env2=new VEnv();
-		VInt aInt=new VInt();
-		VInt bInt=new VInt();
-		bInt.value =90;
-		VParameterList parameterList=new VParameterList();
-		//parameterList.DeclareParameterInDeclaration("b");
+		VEnv env = new VEnv();
+		VEnv env2 = new VEnv();
+		VInt aInt = new VInt();
+		VInt bInt = new VInt();
+		bInt.value = 90;
+		VParameterList parameterList = new VParameterList();
+		parameterList.DeclareParameterInDeclaration("b");
 		parameterList.SetParameterInInvocation(bInt);
-		env2.parameterList=parameterList;
+		env2.parameterList = parameterList;
 		env.setParentEnv(env2);
-		aInt.value =1;
+		aInt.value = 1;
 		env.AddVariable("a", aInt);
-		System.out.println(env.getVar("a"));
+		System.out.println(env.getVar("b"));
 	}
 }

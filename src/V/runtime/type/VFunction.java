@@ -31,4 +31,12 @@ public class VFunction extends VObject{
 		return "VFunction [paraList=" + paraList + ", label=" + label
 				+ ", from=" + from + "]";
 	}
+	public VFunction Clone() {
+		// TODO Auto-generated method stub
+		VFunction function=new VFunction();
+		function.paraList=this.paraList.Clone();
+		function.label=this.label;
+		function.from =this.from;
+		return function;
+	}
 }

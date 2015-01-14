@@ -24,9 +24,9 @@ public class BlockStatements extends VSyntaxBase {
 		try {
 			index = Want(new BlockStatement(), index_old, env);
 			if (calcEnable == true) {
-				if (env.getDirectlyVariable("0") != null) {
-					this.result = env.getDirectlyVariable("0");
-					System.out.println(this.result);
+				if (env.getDirectlyVariable("return") != null) {
+					this.result = env.getDirectlyVariable("return");
+					//System.out.println(this.result+"]");
 					return index;
 				}
 			}

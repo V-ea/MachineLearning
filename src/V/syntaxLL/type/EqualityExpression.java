@@ -37,7 +37,7 @@ public class EqualityExpression extends VSyntaxBase {
 			} else if (units[index].data.equals("!")) {
 				index++;
 				index = Want(VLexUnit.EQUAL, null, index, env);
-				index = Want(new RelationalExpression(), index, env);
+				index = Want(v = new RelationalExpression(), index, env);
 				if (calcEnable) {
 					VBoolean vBoolean = new VBoolean();
 					vBoolean.value = true;
@@ -48,7 +48,7 @@ public class EqualityExpression extends VSyntaxBase {
 				}
 				return index;
 			}
-			if(calcEnable)
+			if (calcEnable)
 				this.result = resultObject1;
 			return index;
 		} catch (Exception e) {

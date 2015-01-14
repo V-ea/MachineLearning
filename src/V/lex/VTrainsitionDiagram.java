@@ -14,9 +14,9 @@ public class VTrainsitionDiagram {
 			{ 2, 2,3,-1,-2},
 			{ 3, 3,-2,-1,-2},
 	};//这里将.当做1-9来处理
-	public final int string[][]=new int[][]{ //STATE 0 1   input CHAR_ls:0 CHAR_ws2:1 other 2 
-			{1,-3,-3},
-			{-4,-2,1},
+	public final int string[][]=new int[][]{ //STATE 0 1 input CHAR_ls:0 other 1 
+			{1,-3},
+			{-4,1},
 	};
 	//after eq check boolean_eq;
 	public final int eq[][]=new int[][]{ // STATE 0 1 input CHAR_equal 0 other 1 
@@ -79,10 +79,8 @@ public class VTrainsitionDiagram {
 		{
 		case VCharType.CHAR_ls:
 			return 0;
-		case VCharType.CHAR_ws2:
-			return 1;
 		default:
-			return 2;
+			return 1;
 		}
 	}
 	public int eq_char(int old)

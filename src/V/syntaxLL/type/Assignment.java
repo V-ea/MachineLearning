@@ -28,8 +28,9 @@ public class Assignment extends VSyntaxBase {
 								v2.result);
 						this.result = v2.result;
 					} else {
+						//System.out.println(((VString) v.result).value);
 						VObject object = env.getVar(((VString) v.result).value);
-						// System.out.println(object);
+						// System.out.println(":"+object);
 						if (string.value.equals("+=")) {
 							this.result = VObject.plus(object, v2.result);
 							System.out.println("+= invoked");

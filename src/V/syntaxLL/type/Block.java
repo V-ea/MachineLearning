@@ -22,7 +22,8 @@ public class Block extends VSyntaxBase {
 				if(calcEnable)
 					this.result = v.result;
 			}
-			index =Want(VLexUnit.RIGHTB, null, index, env);
+			//if(!calcEnable)
+				index =Want(VLexUnit.RIGHTB, null, index, env);
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

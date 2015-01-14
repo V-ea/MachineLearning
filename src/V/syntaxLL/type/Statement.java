@@ -21,6 +21,7 @@ public class Statement extends VSyntaxBase {
 			}
 			if(units[index].data.equals("while"))
 			{
+				System.out.println("while");
 				index =Want(new WhileStatement(), index, env);
 				return index;
 			}
