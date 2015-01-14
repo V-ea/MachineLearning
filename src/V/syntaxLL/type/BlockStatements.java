@@ -25,9 +25,8 @@ public class BlockStatements extends VSyntaxBase {
 			index = Want(new BlockStatement(), index_old, env);
 			if (calcEnable == true) {
 				if (env.getDirectlyVariable("return") != null) {
-					this.result = env.getDirectlyVariable("return");
-					//System.out.println(this.result+"]");
-					return index;
+					
+					calcEnable =false;
 				}
 			}
 		} catch (Exception e) {// NULL
@@ -40,7 +39,6 @@ public class BlockStatements extends VSyntaxBase {
 		try {
 			VSyntaxBase v = null;
 			index = Want(v = new BlockStatements(), index, env);
-			this.result = v.result;
 			return index;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

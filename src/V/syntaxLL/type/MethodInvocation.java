@@ -2,6 +2,7 @@ package V.syntaxLL.type;
 
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
+import V.runtime.env.VFunctionEnv;
 import V.runtime.type.VFunction;
 import V.runtime.type.VInt;
 import V.runtime.type.VObject;
@@ -23,23 +24,22 @@ public class MethodInvocation extends VSyntaxBase {
 			VFunction function = null;
 			index = Want(v = new Id(), index, env);
 			if (calcEnable) {
-				VObject object_ = env.getVar(((VString) v.result).value);
-				if (!(object_ instanceof VFunction))
+				System.out.println("Invoke");
+				VFunction object_ = VEnv.getFunction(((VString) v.result).value);
+				if (object_==null)
 					throw new Exception("no such function named:"
 							+ ((VString) v.result).value);
-				env2 = new VEnv();
-				env2.setParentEnv(env);
+				env2 = new VFunctionEnv();
 				function = ((VFunction) object_).Clone();
-				env2.parameterList = function.paraList;
+				env.PreparedParaList = function.paraList.Clone();
 			}
 			index = Want(VLexUnit.LEFTX, null, index, env);
 			if (units[index].type != VLexUnit.RIGHTX)
-				index = Want(new ArgumentList(), index, env2);// OPT
+				index = Want(new ArgumentList(), index, env);// OPT
 			index = Want(VLexUnit.RIGHTX, null, index, env);
 			if (calcEnable) {
-				System.out.println("a:"+env2.getVar("a"));
+				function.paraList=env.PreparedParaList;
 				this.result = function.Invoke(env2);
-				function.paraList.Clear();
 			}
 			return index;
 		} catch (Exception e) {

@@ -26,8 +26,10 @@ public class PrimaryNoNewArray extends VSyntaxBase {
 					this.result = v.result;
 				return index ;
 			}
-			if(units[index].type==VLexUnit.IDENTIFIER&&isKeyword(units[index])==-1)
+			if((units[index].type==VLexUnit.IDENTIFIER&&isKeyword(units[index])==-1)
+					&&units[index+1].type==VLexUnit.LEFTX)
 			{
+				//System.out.println("PrimaryNoNewArray:MethodInvocation");
 				index =Want(v=new MethodInvocation(), index, env);
 				if (calcEnable)
 					this.result = v.result;

@@ -12,8 +12,6 @@ public abstract class VObject {
 			return("boolean");
 		else if(result instanceof VString)
 			return("string");
-		else if(result instanceof VFunction)
-			return("function");
 		else {
 			return("unknown/null");
 		}

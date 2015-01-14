@@ -2,6 +2,8 @@ package V.syntaxLL.type;
 
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
+import V.runtime.env.VFunctionEnv;
+import V.runtime.type.VFunction;
 /**
  * 
  * @author Vea -  Eapchen专用标签 - 代码修改请保留该选项
@@ -20,8 +22,14 @@ public class ReturnStatement extends VSyntaxBase {
 				VSyntaxBase vSyntaxBase=null;
 				index =Want(vSyntaxBase=new Expression(), index, env);
 				if (calcEnable)
-					env.AddVariable("return", vSyntaxBase.result);// 0  代表返回值
-				//System.out.println("["+vSyntaxBase.result);
+				{
+					VEnv env2=env;
+					while(!(env2 instanceof VFunctionEnv)&&env2.getParentEnv()!=null)
+					{
+						env2=env2.getParentEnv();
+					}
+					env2.AddVariable("return", vSyntaxBase.result);// 0  代表返回值
+				}
 			}
 			index =Want(VLexUnit.END, null, index, env);                                               
 			return index;

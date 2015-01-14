@@ -64,6 +64,7 @@ public class VParameterList {
 		VParameterList parameterList=new VParameterList();
 		parameterList.count=this.count;
 		parameterList.list=this.list;
+		//parameterList.value.putAll(this.value;
 		return parameterList;
 	}
 }

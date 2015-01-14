@@ -14,16 +14,18 @@ public class Block extends VSyntaxBase {
 	public int Accept(VLexUnit[] units, int index, VEnv env) {
 		// TODO Auto-generated method stub
 		try {
+			boolean calc_old = calcEnable;
 			index =Want(VLexUnit.LEFTB, null, index, env);
 			if(units[index].type!=VLexUnit.RIGHTB)
 			{
 				BlockStatements v=null;
 				index =Want(v=new BlockStatements(), index, env);
-				if(calcEnable)
-					this.result = v.result;
+				if(calc_old)
+					this.result = env.getDirectlyVariable("return");
 			}
 			//if(!calcEnable)
-				index =Want(VLexUnit.RIGHTB, null, index, env);
+			calcEnable =calc_old;
+			index =Want(VLexUnit.RIGHTB, null, index, env);
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

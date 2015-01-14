@@ -14,10 +14,11 @@ public class VFunction extends VObject{
 	public int from =-1;
 	public VObject Invoke(VEnv env)
 	{
-		
+		env.parameterList = paraList;
 		VLexUnit[] units=VSyntaxBase.units;
 		Block block=new Block();
 		try {
+			System.out.println(this);
 			int index =VSyntaxBase.Want(block, from, env);
 			return block.result;
 		} catch (Exception e) {

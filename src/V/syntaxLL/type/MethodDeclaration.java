@@ -24,12 +24,7 @@ public class MethodDeclaration extends VSyntaxBase {
 			{
 				VFunction function=(VFunction)v.result;
 				function.from=index1;
-				if (env.getDirectlyVariable(function.label) == null) {
-					env.AddVariable(function.label, function);
-					// System.out.println(env.getVar(label));
-				} else {
-					throw new Exception(function.label + " is redefined.");
-				}
+				VEnv.setFunction(function.label, function);
 			}
 			return index;
 		} catch (Exception e) {

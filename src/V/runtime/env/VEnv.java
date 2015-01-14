@@ -3,6 +3,7 @@ package V.runtime.env;
 import java.util.HashMap;
 import java.util.Map;
 
+import V.runtime.type.VFunction;
 import V.runtime.type.VInt;
 import V.runtime.type.VObject;
 
@@ -11,7 +12,7 @@ public class VEnv {
 	public String toString() {
 		return "VEnv [parentEnv=" + parentEnv + ", Deepth=" + Deepth
 				+ ", variableMap=" + variableMap + ", parameterList="
-				+ parameterList + "]";
+				+ parameterList + "] VFunctions:"+functionMap;
 	}
 
 	private VEnv parentEnv = null;
@@ -30,6 +31,8 @@ public class VEnv {
 	 */
 	private Map<String, VObject> variableMap = new HashMap<String, VObject>();
 	public VParameterList parameterList = null;
+	public VParameterList PreparedParaList = null;
+	private static Map<String, VFunction> functionMap = new HashMap<String, VFunction>();
 
 	/**
 	 * 
@@ -104,6 +107,19 @@ public class VEnv {
 
 	public void RemoveDirectlyVariable(String label) {
 		this.variableMap.remove(label);
+	}
+
+	public static VFunction getFunction(String label) {
+		return functionMap.get(label);
+	}
+
+	public static void setFunction(String label, VFunction function)
+			throws Exception {
+		if (functionMap.containsKey(label)) {
+			throw new Exception("function " + label
+					+ " has already been declared.");
+		}
+		functionMap.put(label, function);
 	}
 
 	public static void main(String[] args) throws Exception {

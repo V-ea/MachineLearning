@@ -18,8 +18,7 @@ public class ArgumentList extends VSyntaxBase {
 			index =Want(vSyntaxBase=new Expression(), index, env);
 			if(calcEnable)
 			{
-				System.out.println("env"+env.parameterList);
-				env.parameterList.SetParameterInInvocation(vSyntaxBase.result);
+				env.PreparedParaList.SetParameterInInvocation(vSyntaxBase.result);
 			}
 			index =Want(new ArguL_prime(), index, env);
 			return index;
@@ -37,8 +36,13 @@ public class ArgumentList extends VSyntaxBase {
 			try {
 				if(units[index].type==VLexUnit.COMMA)
 				{
+					VSyntaxBase vSyntaxBase=null;
 					index = Want(VLexUnit.COMMA, null, index, env);
-					index =Want(new Expression(), index, env);
+					index =Want(vSyntaxBase=new Expression(), index, env);
+					if(calcEnable)
+					{
+						env.PreparedParaList.SetParameterInInvocation(vSyntaxBase.result);
+					}
 					index =Want(new ArguL_prime(), index, env);
 					return index;
 				}
