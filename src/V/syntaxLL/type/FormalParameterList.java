@@ -2,7 +2,7 @@ package V.syntaxLL.type;
 
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
-import V.runtime.type.VFunction;
+import V.runtime.function.VFunction;
 import V.runtime.type.VString;
 /**
  * 
@@ -24,7 +24,7 @@ public class FormalParameterList extends VSyntaxBase {
 			index =Want(v, index, env);
 			if(calcEnable)
 			{
-				function.paraList
+				function.Parameter()
 					.DeclareParameterInDeclaration(((VString)v.result).value);
 				v1.result = function;
 			}
@@ -55,7 +55,7 @@ public class FormalParameterList extends VSyntaxBase {
 				index =Want(v1, index, env);
 				if(calcEnable)
 				{
-					function.paraList
+					function.Parameter()
 						.DeclareParameterInDeclaration(((VString)v1.result).value);
 					v2.result = function;
 				}

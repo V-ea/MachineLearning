@@ -3,7 +3,8 @@ package V.syntaxLL.type;
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
 import V.runtime.env.VFunctionEnv;
-import V.runtime.type.VFunction;
+import V.runtime.function.VFunction;
+import V.runtime.function.VIFunction;
 import V.runtime.type.VInt;
 import V.runtime.type.VObject;
 import V.runtime.type.VString;
@@ -21,17 +22,17 @@ public class MethodInvocation extends VSyntaxBase {
 		try {
 			VSyntaxBase v = null;
 			VEnv env2 = null;
-			VFunction function = null;
+			VIFunction function = null;
 			index = Want(v = new Id(), index, env);
 			if (calcEnable) {
 				System.out.println(((VString) v.result).value+" Invoked.");
-				VFunction object_ = VEnv.getFunction(((VString) v.result).value);
+				VIFunction object_ = VEnv.getFunction(((VString) v.result).value);
 				if (object_==null)
 					throw new Exception("no such function named:"
 							+ ((VString) v.result).value);
 				env2 = new VFunctionEnv();
-				function = ((VFunction) object_).Clone();
-				env.PreparedParaList = function.paraList.Clone();
+				function = object_;
+				env.PreparedParaList = function.Parameter().Clone();
 			}
 			index = Want(VLexUnit.LEFTX, null, index, env);
 			if (units[index].type != VLexUnit.RIGHTX)

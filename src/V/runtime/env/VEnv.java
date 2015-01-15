@@ -3,7 +3,9 @@ package V.runtime.env;
 import java.util.HashMap;
 import java.util.Map;
 
-import V.runtime.type.VFunction;
+import V.runtime.function.VFunction;
+import V.runtime.function.VIFunction;
+import V.runtime.function.VParameterList;
 import V.runtime.type.VInt;
 import V.runtime.type.VObject;
 
@@ -33,7 +35,7 @@ public class VEnv {
 	private Map<String, VObject> variableMap = new HashMap<String, VObject>();
 	public VParameterList parameterList = null;
 	public VParameterList PreparedParaList = null;
-	private static Map<String, VFunction> functionMap = new HashMap<String, VFunction>();
+	private static Map<String, VIFunction> functionMap = new HashMap<String, VIFunction>();
 	private String id="";
 	public VEnv() {
 		super();
@@ -119,11 +121,11 @@ public class VEnv {
 		this.variableMap.remove(label);
 	}
 
-	public static VFunction getFunction(String label) {
+	public static VIFunction getFunction(String label) {
 		return functionMap.get(label);
 	}
 
-	public static void setFunction(String label, VFunction function)
+	public static void setFunction(String label, VIFunction function)
 			throws Exception {
 		if (functionMap.containsKey(label)) {
 			throw new Exception("function " + label

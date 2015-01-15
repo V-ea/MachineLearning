@@ -2,7 +2,7 @@ package V.syntaxLL.type;
 
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
-import V.runtime.type.VFunction;
+import V.runtime.function.VFunction;
 import V.runtime.type.VString;
 /**
  * 

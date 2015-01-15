@@ -1,15 +1,15 @@
-package V.runtime.type;
+package V.runtime.function;
 
 
 
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
-import V.runtime.env.VParameterList;
+import V.runtime.type.VObject;
 import V.syntaxLL.type.Block;
 import V.syntaxLL.type.VSyntaxBase;
 
-public class VFunction extends VObject{
-	public VParameterList paraList=new VParameterList();
+public class VFunction extends VObject implements VIFunction{
+	private VParameterList paraList=new VParameterList();
 	public String label=null;
 	public int from =-1;
 	public VObject Invoke(VEnv env)
@@ -38,5 +38,10 @@ public class VFunction extends VObject{
 		function.label=this.label;
 		function.from =this.from;
 		return function;
+	}
+	@Override
+	public VParameterList Parameter() {
+		// TODO Auto-generated method stub
+		return this.paraList;
 	}
 }

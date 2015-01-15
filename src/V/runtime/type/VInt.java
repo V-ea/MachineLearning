@@ -1,7 +1,7 @@
 package V.runtime.type;
 
 public class VInt extends VObject {
-	public int value=0;
+	public double value=0;
 	
 	public static VInt get(String data) {
 		// TODO Auto-generated method stub

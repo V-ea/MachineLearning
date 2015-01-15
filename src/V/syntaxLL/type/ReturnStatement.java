@@ -3,7 +3,7 @@ package V.syntaxLL.type;
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
 import V.runtime.env.VFunctionEnv;
-import V.runtime.type.VFunction;
+import V.runtime.function.VFunction;
 /**
  * 
  * @author Vea -  Eapchen专用标签 - 代码修改请保留该选项
