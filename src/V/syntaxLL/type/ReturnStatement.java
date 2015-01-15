@@ -29,6 +29,7 @@ public class ReturnStatement extends VSyntaxBase {
 						env2=env2.getParentEnv();
 					}
 					env2.AddVariable("return", vSyntaxBase.result);// 0  代表返回值
+					System.out.println("return:env2:"+env2);
 				}
 			}
 			index =Want(VLexUnit.END, null, index, env);                                               

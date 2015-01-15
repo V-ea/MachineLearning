@@ -20,13 +20,13 @@ public class RelationalExpression extends VSyntaxBase {
 			VObject object = null;
 			index = Want(v = new ShiftExpression(), index, env);
 			if (calcEnable)
-				object = v.result;
+				object = v.result.Clone();
 			v = new RE_prime();
 			if (calcEnable)
-				v.result = object;
+				v.result = object.Clone();
 			index = Want(v, index, env);
 			if (calcEnable)
-				this.result = v.result;
+				this.result = v.result.Clone();
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

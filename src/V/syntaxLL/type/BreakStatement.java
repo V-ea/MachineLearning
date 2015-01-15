@@ -25,6 +25,12 @@ public class BreakStatement extends VSyntaxBase {
 					// TODO Auto-generated method stub
 					return null;
 				}
+
+				@Override
+				public VObject Clone() {
+					// TODO Auto-generated method stub
+					return null;
+				}
 			});
 			return index;
 		} catch (Exception e) {

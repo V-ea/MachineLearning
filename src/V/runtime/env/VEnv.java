@@ -12,7 +12,8 @@ public class VEnv {
 	public String toString() {
 		return "VEnv [parentEnv=" + parentEnv + ", Deepth=" + Deepth
 				+ ", variableMap=" + variableMap + ", parameterList="
-				+ parameterList + "] VFunctions:"+functionMap;
+				+ parameterList + ", PreparedParaList=" + PreparedParaList
+				+ ", id=" + id + "]";
 	}
 
 	private VEnv parentEnv = null;
@@ -33,6 +34,12 @@ public class VEnv {
 	public VParameterList parameterList = null;
 	public VParameterList PreparedParaList = null;
 	private static Map<String, VFunction> functionMap = new HashMap<String, VFunction>();
+	private String id="";
+	public VEnv() {
+		super();
+		id="env_id_"+(int)(Math.random()*10000);
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * 
@@ -51,16 +58,16 @@ public class VEnv {
 	}
 
 	public VObject getDirectlyVariable(String label) {
-		System.out.println(this);
+		//System.out.println(this);
 		if (variableMap.containsKey(label)) {
-			return variableMap.get(label);
+			return variableMap.get(label).Clone();
 		}
 		return null;
 	}
 
 	public VObject getVar(String label) throws Exception {
 		VObject object = getVariable(label);
-		System.out.println(this);
+		//System.out.println(this);
 		if (object == null)
 			throw new Exception(label + " is not defined ");
 		return object;
@@ -68,13 +75,16 @@ public class VEnv {
 
 	public VObject getVariable(String label) {
 		if (variableMap.containsKey(label)) {
-			return variableMap.get(label);
+			return variableMap.get(label).Clone();
 		}
 		if (null == getParentEnv()) {
 			if (parameterList == null)//
 				return null;
 			else {
-				return parameterList.GetInInvocation(label);
+				VObject retObject=parameterList.GetInInvocation(label);
+				if(retObject!=null)
+					retObject =retObject.Clone();
+				return retObject;
 			}
 		}
 		if (parameterList == null)//
@@ -84,7 +94,7 @@ public class VEnv {
 			if (object == null) {
 				return parentEnv.getVariable(label);
 			}
-			return object;
+			return object.Clone();
 		}
 
 	}

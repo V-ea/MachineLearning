@@ -22,13 +22,13 @@ public class AssignmentExpression extends VSyntaxBase {
 			{
 				index =Want(v, index, env);
 				if(calcEnable)
-					this.result =v.result;
+					this.result =v.result.Clone();
 				return index;
 			}
 			else {
 				index = Want(v=new ConditionalExpression(), index, env);
 				if(calcEnable)
-					this.result =v.result;
+					this.result =v.result.Clone();
 				return index;
 			}
 		} catch (Exception e) {

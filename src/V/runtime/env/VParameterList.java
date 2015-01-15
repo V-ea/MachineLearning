@@ -4,18 +4,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import V.runtime.type.VObject;
 
-public class VParameterList {
+public class VParameterList extends VObject{
 	private int count=0;//parameter count
 	private int nextParaIndex=0;
 	private List<String> list=new ArrayList<String>();
 	private Map<String, VObject> value=new HashMap<String, VObject>();
-	
+	private String id="";
+	public VParameterList() {
+		super();
+		id=""+(int)(Math.random()*10000);
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public String toString() {
 		return "VParameterList [count=" + count + ", nextParaIndex="
-				+ nextParaIndex + ", list=" + list + ", value=" + value + "]";
+				+ nextParaIndex + ", list=" + list + ", value=" + value
+				+ ", id=" + id + "]";
 	}
 	public void Clear()// for next invocation
 	{
@@ -65,6 +72,7 @@ public class VParameterList {
 		parameterList.count=this.count;
 		parameterList.list=this.list;
 		//parameterList.value.putAll(this.value;
+		parameterList.value=new HashMap<String, VObject>();
 		return parameterList;
 	}
 }

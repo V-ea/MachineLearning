@@ -9,7 +9,13 @@ public class VInt extends VObject {
 		int1.value=Integer.parseInt(data);
 		return int1;
 	}
-
+	@Override
+	public VObject Clone()
+	{
+		VInt ret=new VInt();
+		ret.value=this.value;
+		return ret;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

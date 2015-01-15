@@ -23,7 +23,7 @@ public class UnaryExpression extends VSyntaxBase {
 			// v1.result=v.result;
 			// index =Want(v1, index, env);
 			if (calcEnable)
-				this.result = v.result;
+				this.result = v.result.Clone();
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -53,21 +53,22 @@ public class UnaryExpression extends VSyntaxBase {
 				{
 					index = Want(v = new Primary(), index, env);
 					if (calcEnable)
-						this.result = v.result;
+						this.result = v.result.Clone();
 				} else if (units[index].data.equals("+")
 						&& units[index + 1].data.equals("+")) {
 					index = Want(v = new PreIncrementExpression(), index, env);
-					this.result = v.result;
+					if(calcEnable)
+						this.result = v.result.Clone();
 				} else if (units[index].data.equals("-")
 						&& units[index + 1].data.equals("-")) {
 					index = Want(v = new PreDecrementExpression(), index, env);
 					if (calcEnable)
-						this.result = v.result;
+						this.result = v.result.Clone();
 				} else {
 					index = Want(v = new Id(), index, env);
 					// this.prime.label = ;
 					if (calcEnable)
-						this.result = env.getVar(((VString) v.result).value);
+						this.result = env.getVar(((VString) v.result).value).Clone();
 				}
 				return index;
 			} catch (Exception e) {

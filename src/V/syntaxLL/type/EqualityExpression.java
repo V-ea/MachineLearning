@@ -20,7 +20,7 @@ public class EqualityExpression extends VSyntaxBase {
 			VObject resultObject1 = null;
 			index = Want(v = new RelationalExpression(), index, env);
 			if (calcEnable)
-				resultObject1 = v.result;
+				resultObject1 = v.result.Clone();
 			if (units[index].data.equals("=")) {
 				index++;
 				index = Want(VLexUnit.EQUAL, null, index, env);
@@ -31,7 +31,7 @@ public class EqualityExpression extends VSyntaxBase {
 					if (0 != VObject.compare(resultObject1, v.result)) {
 						vBoolean.value = false;
 					}
-					this.result = vBoolean;
+					this.result = vBoolean.Clone();
 				}
 				return index;
 			} else if (units[index].data.equals("!")) {
@@ -44,12 +44,12 @@ public class EqualityExpression extends VSyntaxBase {
 					if (0 == VObject.compare(resultObject1, v.result)) {
 						vBoolean.value = false;
 					}
-					this.result = vBoolean;
+					this.result = vBoolean.Clone();
 				}
 				return index;
 			}
 			if (calcEnable)
-				this.result = resultObject1;
+				this.result = resultObject1.Clone();
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

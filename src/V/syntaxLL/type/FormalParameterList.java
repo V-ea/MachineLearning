@@ -29,7 +29,8 @@ public class FormalParameterList extends VSyntaxBase {
 				v1.result = function;
 			}
 			index =Want(v1, index, env);
-			this.result=v1.result;
+			if(calcEnable)
+				this.result=v1.result;
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

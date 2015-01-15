@@ -23,7 +23,7 @@ public class PrimaryNoNewArray extends VSyntaxBase {
 				index =Want(v=new Expression(), index, env);
 				index = Want(VLexUnit.RIGHTX,null, index, env);
 				if (calcEnable)
-					this.result = v.result;
+					this.result = v.result.Clone();
 				return index ;
 			}
 			if((units[index].type==VLexUnit.IDENTIFIER&&isKeyword(units[index])==-1)
@@ -32,12 +32,15 @@ public class PrimaryNoNewArray extends VSyntaxBase {
 				//System.out.println("PrimaryNoNewArray:MethodInvocation");
 				index =Want(v=new MethodInvocation(), index, env);
 				if (calcEnable)
-					this.result = v.result;
+				{
+					System.out.println("in pnn:"+v.result);
+					this.result = v.result.Clone();
+				}
 				return index;
 			}
 			index = Want(v=new Literal(), index, env);
 			if (calcEnable)
-				this.result = v.result;
+				this.result = v.result.Clone();
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

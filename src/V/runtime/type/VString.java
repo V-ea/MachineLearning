@@ -12,7 +12,13 @@ public class VString extends VObject {
 				.replaceAll(":t", "\t");
 		return s1;
 	}
-
+	@Override
+	public VObject Clone()
+	{
+		VString ret=new VString();
+		ret.value=this.value;
+		return ret;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

@@ -19,12 +19,12 @@ public class AdditiveExpression extends VSyntaxBase {
 			index = Want(v, index, env);
 			if (calcEnable)
 			{
-				v1.result = v.result;
+				v1.result = v.result.Clone();
 				
 			}
 			index = Want(v1, index, env);
 			if (calcEnable)
-				this.result = v1.result;
+				this.result = v1.result.Clone();
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -56,7 +56,7 @@ public class AdditiveExpression extends VSyntaxBase {
 					}
 					index = Want(v2, index, env);
 					if (calcEnable) {
-						this.result = v2.result;
+						this.result = v2.result.Clone();
 					}
 					//System.out.println(this.result + ":");
 					return index;

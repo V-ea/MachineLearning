@@ -18,7 +18,7 @@ public class Primary extends VSyntaxBase {
 			VSyntaxBase v=null;
 			index =Want(v=new PrimaryNoNewArray(), index, env);
 			if (calcEnable)
-				this.result = v.result;
+				this.result = v.result.Clone();
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

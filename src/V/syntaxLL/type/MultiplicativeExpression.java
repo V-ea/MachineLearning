@@ -18,11 +18,11 @@ public class MultiplicativeExpression extends VSyntaxBase {
 			VSyntaxBase v = new UnaryExpression(), v1 = new MultiE_prime();
 			index = Want(v, index, env);
 			if (calcEnable)
-				v1.result = v.result;
+				v1.result = v.result.Clone();
 			// System.out.println("["+v1.result);
 			index = Want(v1, index, env);
 			if (calcEnable)
-				this.result = v1.result;
+				this.result = v1.result.Clone();
 			return index;
 		} catch (Exception e) {
 			// TODO: handle exception

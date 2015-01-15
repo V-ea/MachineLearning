@@ -26,7 +26,7 @@ public class Assignment extends VSyntaxBase {
 					if (string.value.equals("=")) {
 						env.ChangeVariable(((VString) v.result).value,
 								v2.result);
-						this.result = v2.result;
+						this.result = v2.result.Clone();
 					} else {
 						//System.out.println(((VString) v.result).value);
 						VObject object = env.getVar(((VString) v.result).value);

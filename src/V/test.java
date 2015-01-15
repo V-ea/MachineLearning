@@ -8,7 +8,10 @@ public class test {
 	public static void main(String[] args) {
 		// boolean a=1||1;
 		float a = 0.8f;
-		System.out.println("\\n");
+		String aString ="ssss";
+		String bString=aString;
+		bString="ddd";
+		System.out.println(aString);
 		// System.out.println(++(++a));
 	}
 

@@ -9,7 +9,13 @@ public class VBoolean extends VObject {
 		Boolean1.value=Boolean.parseBoolean(data);
 		return Boolean1;
 	}
-
+	@Override
+	public VObject Clone()
+	{
+		VBoolean ret=new VBoolean();
+		ret.value=this.value;
+		return ret;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

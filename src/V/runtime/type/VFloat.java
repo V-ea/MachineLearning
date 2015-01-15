@@ -9,7 +9,13 @@ public class VFloat extends VObject {
 		float1.value=Float.parseFloat(data);
 		return float1;
 	}
-
+	@Override
+	public VObject Clone()
+	{
+		VFloat ret=new VFloat();
+		ret.value=this.value;
+		return ret;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

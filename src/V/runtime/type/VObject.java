@@ -2,6 +2,7 @@ package V.runtime.type;
 
 public abstract class VObject {
 	public abstract String toString();
+	public abstract VObject Clone();
 	private static String printType(VObject result)
 	{
 		if(result instanceof VFloat)
@@ -23,28 +24,28 @@ public abstract class VObject {
 			VFloat vFloat=(VFloat)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value*=vFloat.value;
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VFloat&&reObject instanceof VInt)
 		{
 			VInt vFloat=(VInt)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value*=vFloat.value;
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VFloat)
 		{
 			VFloat vFloat=(VFloat)reObject;
 			VInt vFloat2=(VInt)result2;
 			vFloat.value*=vFloat2.value;
-			return  vFloat;
+			return  vFloat.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
 		{
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
 			vInt2.value*=vInt.value;
-			return  vInt2;
+			return  vInt2.Clone();
 		}
 		throw new Exception("multi:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
@@ -55,35 +56,35 @@ public abstract class VObject {
 			VFloat vFloat=(VFloat)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value+=vFloat.value;
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VFloat&&reObject instanceof VInt)
 		{
 			VInt vFloat=(VInt)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value+=vFloat.value;
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VFloat)
 		{
 			VFloat vFloat=(VFloat)reObject;
 			VInt vFloat2=(VInt)result2;
 			vFloat.value+=vFloat2.value;
-			return  vFloat;
+			return  vFloat.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
 		{
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
 			vInt2.value+=vInt.value;
-			return  vInt2;
+			return  vInt2.Clone();
 		}
 		if(result2 instanceof VString|| reObject instanceof VString)
 		{
 			String aString= result2.toString()+reObject.toString();
 			VString vString=new VString();
 			vString.value = aString;
-			return vString;
+			return vString.Clone();
 		}
 		throw new Exception("plus:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
@@ -94,14 +95,14 @@ public abstract class VObject {
 			VFloat vFloat=(VFloat)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value-=vFloat.value;
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VFloat&&reObject instanceof VInt)
 		{
 			VInt vFloat=(VInt)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value-=vFloat.value;
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VFloat)
 		{
@@ -109,14 +110,14 @@ public abstract class VObject {
 			VInt vFloat2=(VInt)result2;
 			VFloat vFloat3=new VFloat();
 			vFloat3.value=(float)vFloat2.value-vFloat.value;
-			return  vFloat3;
+			return  vFloat3.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
 		{
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
 			vInt2.value-=vInt.value;
-			return  vInt2;
+			return  vInt2.Clone();
 		}
 		throw new Exception("minus:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
@@ -127,14 +128,14 @@ public abstract class VObject {
 			VFloat vFloat=(VFloat)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value/=vFloat.value;
-			return  vFloat;
+			return  vFloat.Clone();
 		}
 		if(result2 instanceof VFloat&&reObject instanceof VInt)
 		{
 			VInt vFloat=(VInt)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value/=vFloat.value;
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VFloat)
 		{
@@ -142,14 +143,14 @@ public abstract class VObject {
 			VInt vFloat2=(VInt)result2;
 			VFloat vFloat3=new VFloat();
 			vFloat3.value=(float)vFloat2.value/vFloat.value;
-			return  vFloat3;
+			return  vFloat3.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
 		{
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
 			vInt2.value/=vInt.value;
-			return  vInt2;
+			return  vInt2.Clone();
 		}
 		throw new Exception("divide:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
@@ -160,14 +161,14 @@ public abstract class VObject {
 			VFloat vFloat=(VFloat)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value%=vFloat.value;
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VFloat&&reObject instanceof VInt)
 		{
 			VInt vFloat=(VInt)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value%=vFloat.value;
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VFloat)
 		{
@@ -176,14 +177,14 @@ public abstract class VObject {
 			VFloat vFloat3=new VFloat();
 			
 			vFloat3.value=((int)vFloat2.value)%vFloat.value;
-			return  vFloat3;
+			return  vFloat3.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
 		{
 			VInt vInt=(VInt)reObject;
 			VInt vInt2=(VInt)result2;
 			vInt2.value%=vInt.value;
-			return  vInt2;
+			return  vInt2.Clone();
 		}
 		throw new Exception("mod:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
@@ -194,7 +195,7 @@ public abstract class VObject {
 			VInt vFloat=(VInt)reObject;
 			VFloat vFloat2=(VFloat)result2;
 			vFloat2.value = (float) Math.pow(vFloat2.value,vFloat.value);
-			return  vFloat2;
+			return  vFloat2.Clone();
 		}
 		if(result2 instanceof VInt&&reObject instanceof VInt)
 		{
@@ -203,7 +204,7 @@ public abstract class VObject {
 			VFloat vFloat=new VFloat();
 			vFloat.value=(float) Math.pow(vInt2.value,vInt.value);
 			
-			return  vFloat;
+			return  vFloat.Clone();
 		}
 		throw new Exception("exp:unexcepted VObject."+printType(result2)+" vs "+printType(reObject));
 	}
