@@ -23,11 +23,11 @@ public class BlockStatements extends VSyntaxBase {
 			return index_old;
 		try {
 			index = Want(new BlockStatement(), index_old, env);
-			for(int o=index_old;o<index;o++)
-			{
-				System.out.print(units[o].data+" ");
-			}
-			System.out.println(calcEnable+" return:"+env.getDirectlyVariable("return"));
+//			for(int o=index_old;o<index;o++)
+//			{
+//				System.out.print(units[o].data+" ");
+//			}
+//			System.out.println(calcEnable+" return:"+env.getDirectlyVariable("return"));
 			if (calcEnable == true) {
 				if (env.getDirectlyVariable("return") != null) {
 					calcEnable =false;

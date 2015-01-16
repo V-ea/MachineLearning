@@ -41,7 +41,7 @@ public class VParameterList extends VObject{
 	{
 		if(nextParaIndex>=count)
 		{
-			throw new Exception("parameter count > needed."+nextParaIndex);
+			throw new Exception(this+"\nparameter count > needed.next:"+nextParaIndex);
 		}
 		value.put(list.get(nextParaIndex++), object);
 	}
@@ -71,6 +71,7 @@ public class VParameterList extends VObject{
 		VParameterList parameterList=new VParameterList();
 		parameterList.count=this.count;
 		parameterList.list=this.list;
+		parameterList.nextParaIndex=0;
 		//parameterList.value.putAll(this.value;
 		parameterList.value=new HashMap<String, VObject>();
 		return parameterList;

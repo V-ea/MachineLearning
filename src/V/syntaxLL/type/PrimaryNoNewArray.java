@@ -33,7 +33,8 @@ public class PrimaryNoNewArray extends VSyntaxBase {
 				index =Want(v=new MethodInvocation(), index, env);
 				if (calcEnable)
 				{
-					System.out.println("in pnn:"+v.result);
+					//System.out.println("in pnn:"+v.result);
+					
 					this.result = v.result.Clone();
 				}
 				return index;

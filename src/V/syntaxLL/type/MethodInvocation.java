@@ -25,7 +25,7 @@ public class MethodInvocation extends VSyntaxBase {
 			VIFunction function = null;
 			index = Want(v = new Id(), index, env);
 			if (calcEnable) {
-				System.out.println(((VString) v.result).value+" Invoked.");
+				//System.out.println(((VString) v.result).value+" Invoked.");
 				VIFunction object_ = VEnv.getFunction(((VString) v.result).value);
 				if (object_==null)
 					throw new Exception("no such function named:"
@@ -33,6 +33,7 @@ public class MethodInvocation extends VSyntaxBase {
 				env2 = new VFunctionEnv();
 				function = object_;
 				env.PreparedParaList = function.Parameter().Clone();
+				//System.out.println("env.PreparedParaList"+env.PreparedParaList);
 			}
 			index = Want(VLexUnit.LEFTX, null, index, env);
 			if (units[index].type != VLexUnit.RIGHTX)
@@ -40,9 +41,11 @@ public class MethodInvocation extends VSyntaxBase {
 			index = Want(VLexUnit.RIGHTX, null, index, env);
 			if (calcEnable) {
 				env2.parameterList=env.PreparedParaList;
-				System.out.println("env2: "+env2);
-				this.result = function.Invoke(env2).Clone();
-				System.out.println("env: "+env);
+				//System.out.println("env2: "+env2);
+				this.result = function.Invoke(env2);
+				this.result=(this.result==null?null:this.result.Clone());
+				//System.out.println("env: "+env);
+				//env.PreparedParaList.Clear();
 			}
 			return index;
 		} catch (Exception e) {

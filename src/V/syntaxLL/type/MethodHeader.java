@@ -21,7 +21,7 @@ public class MethodHeader extends VSyntaxBase {
 			index =Want(v=new MethodDeclarator(), index, env);
 			if(calcEnable)
 			{
-				this.result = v.result;
+				this.result = v.result.Clone();
 			}
 			return index;
 		} catch (Exception e) {

@@ -24,7 +24,7 @@ public class MethodDeclaration extends VSyntaxBase {
 			{
 				VFunction function=(VFunction)v.result;
 				function.from=index1;
-				VEnv.setFunction(function.label, function);
+				VEnv.setFunction(function.GetLabel(), function);
 			}
 			return index;
 		} catch (Exception e) {

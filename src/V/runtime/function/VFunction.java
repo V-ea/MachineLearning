@@ -10,11 +10,10 @@ import V.syntaxLL.type.VSyntaxBase;
 
 public class VFunction extends VObject implements VIFunction{
 	private VParameterList paraList=new VParameterList();
-	public String label=null;
+	private String label=null;
 	public int from =-1;
 	public VObject Invoke(VEnv env)
 	{
-		VLexUnit[] units=VSyntaxBase.units;
 		Block block=new Block();
 		try {
 			int index =VSyntaxBase.Want(block, from, env);
@@ -43,5 +42,15 @@ public class VFunction extends VObject implements VIFunction{
 	public VParameterList Parameter() {
 		// TODO Auto-generated method stub
 		return this.paraList;
+	}
+	@Override
+	public String GetLabel() {
+		// TODO Auto-generated method stub
+		return label;
+	}
+	@Override
+	public void SetLabel(String aString) {
+		// TODO Auto-generated method stub
+		label = aString;
 	}
 }

@@ -12,6 +12,7 @@ import java.util.Map;
 import V.lex.VLex;
 import V.lex.VLexUnit;
 import V.runtime.env.VEnv;
+import V.runtime.function.VLibFunction;
 import V.runtime.type.VInt;
 /**
  * 
@@ -26,7 +27,13 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//Èç¹û
-		String ss="E:\\test.txt";
+		//System.out.println(args.length);
+		if(args==null)
+		{
+			System.out.println("Vmath Usage: VMath [script file]");
+			System.exit(0);
+		}
+		String ss=args[0];//"E:\\test.txt";
 //		if (args.length != 1) {
 //			System.out.println("Usage:VEaFileLoader [ea_file]");
 //			return;
@@ -69,6 +76,12 @@ public class Main {
 		}
 		VSyntaxBase startNode=new Start();
 		VEnv env=new VEnv();
+		try {
+			VEnv.setFunction("print", new VLibFunction());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//VSyntaxBase.calcEnable=false;
 		startNode.Accept(units, 0, env);
 		//System.out.println("["+((VInt)env.getVariable("a")).value+"]");

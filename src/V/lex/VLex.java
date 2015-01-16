@@ -71,8 +71,8 @@ public class VLex {
 		
 		VLexUnit[] units=new VLexUnit[list.size()];
 		list.toArray(units);
-		for(int iii=0;iii<units.length;iii++)
-			System.out.println(units[iii]);
+//		for(int iii=0;iii<units.length;iii++)
+//			System.out.println(units[iii]);
 		return units;
 	}
 

@@ -30,7 +30,7 @@ public class MethodDeclarator extends VSyntaxBase {
 				if(calcEnable)
 				{
 					function=(VFunction)v.result;
-					function.label=label;
+					function.SetLabel(label);
 				}
 			}
 			index =Want(VLexUnit.RIGHTX, null, index, env);
