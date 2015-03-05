@@ -49,7 +49,9 @@ public abstract class VSyntaxBase {
 		int index1 = vsb.Accept(units, index, env);
 		if(index1==VSyntaxBase.UNMATCHED)
 		{
-			throw new Exception("error:unmatched"+units[index]);				
+			System.out.println("error:unmatched"+units[index]);
+			System.exit(0);
+			return -1;			
 		}
 		else {
 			index=index1;
@@ -74,7 +76,9 @@ public abstract class VSyntaxBase {
 				return index+1;
 			}
 		}
-		throw new Exception("error:unmatched"+units[index]);
+		System.out.println("error:unmatched"+units[index]);
+		System.exit(0);
+		return -1;
 	}
 	public static String[] keywords=null;
 	static{
